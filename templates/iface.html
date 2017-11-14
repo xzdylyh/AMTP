@@ -38,25 +38,28 @@
         #table-1 thead, #table-1 tr {
         border-top-width: 1px;
         border-top-style: solid;
-        border-top-color: rgb(230, 189, 189);
+        border-top-color: rgb(211, 202, 221);
         }
         #table-1 {
         border-bottom-width: 1px;
         border-bottom-style: solid;
-        border-bottom-color: rgb(230, 189, 189);
+        border-bottom-color: rgb(211, 202, 221);
         }
 
         /* Padding and font style */
         #table-1 td, #table-1 th {
-        padding: 5px 60px;
+        padding: 5px 50px;
         font-size: 12px;
         font-family: Verdana;
-        color: rgb(177, 106, 104);
+        color: rgb(95, 74, 121);
         }
 
+        #table-1 th{
+        background: rgb(223, 216, 232)
+        }
         /* Alternating background colors */
         #table-1 tr:nth-child(even) {
-        background: rgb(238, 211, 210)
+        background: rgb(223, 216, 232)
         }
         #table-1 tr:nth-child(odd) {
         background: #FFF
@@ -64,7 +67,6 @@
 
 
     </style>
-
     <script>
         <!--get document id object -->
         function $(id){
@@ -89,7 +91,7 @@
 </head>
 <body>
     <div id="mainDiv">
-        <label id="labelfont">接口测试用例管理</label>
+        <label id="labelfont">>>用例管理>>接口测试用例管理</label>
     </div>
     </br>
 
@@ -121,19 +123,15 @@
         </form>
     </div>
     <!--views is case data -->
-    <div id="table-1">
-         <table>
+    <div style="margin:15px 0px 0px 0px;">
+         <table  id="table-1">
             <thead>
-                <tr>
-                    <th></th>
-                </tr>
+                <th>接口地址</th>
+                <th>方法</th>
+                <th>数据</th>
+                <th>预期</th>
+                <th></th>
             </thead>
-            <th>接口地址</th>
-            <th>方法</th>
-            <th>数据</th>
-            <th>预期</th>
-            <td></td>
-
             <tr>
                 <td>/login/page.ajax</td>
                 <td>post</td>
