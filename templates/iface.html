@@ -1,10 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>接口用例管理</title>
+    <style type="text/css">
+        #mainDiv{
+            border-bottom: 1px dashed   lightblue;
+        }
+        #labelfont{
+            width:20px;
+            height:150px;
+            font-family: 'Heiti SC', 'Microsoft YaHei';
+            color: brown;
+            text-align:center;
+        }
+
+        #inputPro{
+            width:800px;
+            font-family: 'Heiti SC', 'Microsoft YaHei';
+            color: blue;
+            text-align:center;
+        }
+        #inputBtn{
+            width:200px;
+            font-family: 'Heiti SC', 'Microsoft YaHei';
+            color: blue;
+            text-align:center;
+        }
+
+        .dataarea{
+            width:400px;
+            height:50px;
+            resize:none
+        }
+
+        /* Border styles */
+        #table-1 thead, #table-1 tr {
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: rgb(230, 189, 189);
+        }
+        #table-1 {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgb(230, 189, 189);
+        }
+
+        /* Padding and font style */
+        #table-1 td, #table-1 th {
+        padding: 5px 60px;
+        font-size: 12px;
+        font-family: Verdana;
+        color: rgb(177, 106, 104);
+        }
+
+        /* Alternating background colors */
+        #table-1 tr:nth-child(even) {
+        background: rgb(238, 211, 210)
+        }
+        #table-1 tr:nth-child(odd) {
+        background: #FFF
+        }
+
+
+    </style>
+
+    <script>
+        <!--get document id object -->
+        function $(id){
+            return document.getElementById(id);
+        }
+
+        <!-- case input view or hidde-->
+        var flag = 1
+        function casebtn() {
+            if(flag==0)
+            {
+                $("addCaseChild").style.display = "none";
+                flag =1;
+            }
+            else
+            {
+                $("addCaseChild").style.display = "";
+                flag =0;
+            }
+        };
+    </script>
 </head>
 <body>
+    <div id="mainDiv">
+        <label id="labelfont">接口测试用例管理</label>
+    </div>
+    </br>
 
+    <!--add table to data -->
+    <div>
+        <input id="inputBtn" type="button" name="addCase" value="增加用例" onclick="casebtn()"/>
+        <form id="caseAddData" action="/" method="post">
+            <div id="addCaseChild" style="display:none;">
+                </br>
+                <label id="labelfont">接口url:<input id="inputUrl" type="text" maxlength="300"/></label>
+                <label id="labelfont">方法:<input id="inputMethod" type="text" maxlength="4"></label>
+                </br>
+                <label id="labelfont">数&nbsp;&nbsp;&nbsp;&nbsp;据:</label>
+                <label id="labelfont">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    预&nbsp;&nbsp;&nbsp;&nbsp;期:</label>
+                </br>
+                <div style="margin:0px 0px 0px 0px;width:420px;">
+                    <textarea class="dataarea">json</textarea>
+                </div>
+                <div style="margin:-61px 0px 0px 470px;width:415px;">
+                    <textarea class="dataarea">json</textarea>
+                </div>
+                <input type="button" value="确认"/>
+                <input type="reset" value="重置">
+            </div>
+        </form>
+    </div>
+    <!--views is case data -->
+    <div id="table-1">
+         <table>
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <th>接口地址</th>
+            <th>方法</th>
+            <th>数据</th>
+            <th>预期</th>
+            <td></td>
+
+            <tr>
+                <td>/login/page.ajax</td>
+                <td>post</td>
+                <td>{"name":"xzdylyh"}</td>
+                <td>{"code":"200"}</td>
+                <td>
+                    <input id="1" type="button" value="编辑"/>
+                    <input id="2" type="button" value="删除"/>
+                </td>
+            </tr>
+            <tr>
+                <td>123414</td>
+                <td>88dsfasd</td>
+                <td>io009099</td>
+                <td>dsfdasfds</td>
+                <td>
+                    <input id="1" type="button" value="编辑"/>
+                    <input id="2" type="button" value="删除"/>
+                </td>
+            </tr>
+            <tr>
+                <td>123414</td>
+                <td>88dsfasd</td>
+                <td>io009099</td>
+                <td>dsfdasfds</td>
+                <td>
+                    <input id="1" type="button" value="编辑"/>
+                    <input id="2" type="button" value="删除"/>
+                </td>
+            </tr>
+            <tr>
+                <td>123414</td>
+                <td>88dsfasd</td>
+                <td>io009099</td>
+                <td>dsfdasfds</td>
+                <td>
+                    <input id="1" type="button" value="修改"/>
+                    <input id="2" type="button" value="删除"/>
+                </td>
+            </tr>
+         </table>
+    </div>
 </body>
 </html>

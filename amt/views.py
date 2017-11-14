@@ -6,3 +6,6 @@ from django.http import request
 # Create your views here.
 def case_manage_page(request):
     return render(request,"casemanage.html")
+
+def case_manage_iface(request):
+    return render(request,"iface.html")
