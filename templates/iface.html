@@ -6,6 +6,7 @@
     <style type="text/css">
         #mainDiv{
             border-bottom: 1px dashed   lightblue;
+            background: rgb(223, 216, 232);
         }
         #labelfont{
             width:20px;
@@ -44,6 +45,8 @@
         border-bottom-width: 1px;
         border-bottom-style: solid;
         border-bottom-color: rgb(211, 202, 221);
+        table-layout:fixed;
+        word-break:break-all;
         }
 
         /* Padding and font style */
@@ -65,7 +68,12 @@
         background: #FFF
         }
 
-
+        .MHover{
+                border:1px solid #ccc;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+                overflow:hidden;
+        }
     </style>
     <script>
         <!--get document id object -->
@@ -87,6 +95,10 @@
                 flag =0;
             }
         };
+    </script>
+    <script type="text/javascript">
+        var title = $(datadiv).innerText;
+        $(datadiv).setAttribute("title",title);
     </script>
 </head>
 <body>
@@ -135,7 +147,9 @@
             <tr>
                 <td>/login/page.ajax</td>
                 <td>post</td>
-                <td>{"name":"xzdylyh"}</td>
+                <td>
+                   <div id="datadiv" title="">{"name":"xzdylyh","name":"xzdylyh","name":"xzdylyh","name":"xzdylyh"}</div>
+                </td>
                 <td>{"code":"200"}</td>
                 <td>
                     <input id="1" type="button" value="编辑"/>
