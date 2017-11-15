@@ -51,7 +51,7 @@
 
         /* Padding and font style */
         #table-1 td, #table-1 th {
-        padding: 5px 50px;
+        padding: 5px 67px;
         font-size: 12px;
         font-family: Verdana;
         color: rgb(95, 74, 121);
@@ -68,11 +68,28 @@
         background: #FFF
         }
 
+        /*表格内容超长显示省略号*/
         .MHover{
-                border:1px solid #ccc;
-                white-space:nowrap;
-                text-overflow:ellipsis;
-                overflow:hidden;
+                width:150px;
+                white-space:nowrap; /*不换行*/
+                text-overflow:ellipsis;/*超出部分用....代替  */
+                overflow:hidden;/*超出隐藏*/
+        }
+
+        /*滚动条*/
+        .tableDiv{
+        overflow-x: auto;
+        overflow-y: auto;
+        height: 500px;
+        width:1000px;
+        margin:15px 0px 0px 0px;
+        }
+        /*add case input*/
+        .addCaseDiv{
+            /*border:1px solid red;*/
+            display:inline-block;
+            *display:inline;
+            *zoom:1;
         }
     </style>
     <script>
@@ -96,10 +113,7 @@
             }
         };
     </script>
-    <script type="text/javascript">
-        var title = $(datadiv).innerText;
-        $(datadiv).setAttribute("title",title);
-    </script>
+
 </head>
 <body>
     <div id="mainDiv">
@@ -110,11 +124,34 @@
     <!--add table to data -->
     <div>
         <input id="inputBtn" type="button" name="addCase" value="增加用例" onclick="casebtn()"/>
-        <form id="caseAddData" action="/" method="post">
+        <form id="caseAddData" method="POST">
             <div id="addCaseChild" style="display:none;">
                 </br>
-                <label id="labelfont">接口url:<input id="inputUrl" type="text" maxlength="300"/></label>
-                <label id="labelfont">方法:<input id="inputMethod" type="text" maxlength="4"></label>
+                <div class="addCaseDiv">
+                    <label id="labelfont" name="iurl">接口url:</label>
+                    <input id="inputUrl" type="text" maxlength="500" style="width:220px;"/>
+                </div>
+                <div class="addCaseDiv" style="position:relative;left:5px;top:0px;">
+                    <label id="labelfont">方法:</label>
+                        <select name="imethod">
+                            <option value="0">POST</option>
+                            <option value="1">GET</option>
+                        </select>
+                </div>
+
+                <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
+                    <label id="labelfont">类型:</label>
+                        <select name="itype">
+                            <option value="0">HTTP</option>
+                            <option value="1">WebServices</option>
+                        </select>
+                </div>
+
+                <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
+                    <label id="labelfont" name="idesc">接口描述:</label>
+                    <input id="inputDesc" type="text" maxlength="300"/>
+                </div>
+
                 </br>
                 <label id="labelfont">数&nbsp;&nbsp;&nbsp;&nbsp;据:</label>
                 <label id="labelfont">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -129,63 +166,44 @@
                 <div style="margin:-61px 0px 0px 470px;width:415px;">
                     <textarea class="dataarea">json</textarea>
                 </div>
-                <input type="button" value="确认"/>
+                <input type="button" value="提交"/>
                 <input type="reset" value="重置">
             </div>
         </form>
     </div>
     <!--views is case data -->
-    <div style="margin:15px 0px 0px 0px;">
+    <div class="tableDiv">
          <table  id="table-1">
             <thead>
+                <th>接口描述</th>
                 <th>接口地址</th>
                 <th>方法</th>
                 <th>数据</th>
                 <th>预期</th>
                 <th></th>
             </thead>
+
+            {% for case in caseData %}
             <tr>
-                <td>/login/page.ajax</td>
-                <td>post</td>
                 <td>
-                   <div id="datadiv" title="">{"name":"xzdylyh","name":"xzdylyh","name":"xzdylyh","name":"xzdylyh"}</div>
+                  <div class="MHover" title="<{{case.ICaseDescription}}>">{{case.ICaseDescription}}</div>
                 </td>
-                <td>{"code":"200"}</td>
+                <td>
+                  <div class="MHover" title="<{{case.ICaseURL}}>">{{case.ICaseURL}}</div>
+                </td>
+                <td>{{case.ICaseMethod}}</td>
+                <td>
+                   <div class="MHover" title="<{{case.ICase_Data}}>">{{case.ICase_Data}}</div>
+                </td>
+                <td>
+                   <div class="MHover" title="<{{case.ICase_ExResult}}>">{{case.ICase_ExResult}}</div>
+                </td>
                 <td>
                     <input id="1" type="button" value="编辑"/>
                     <input id="2" type="button" value="删除"/>
                 </td>
             </tr>
-            <tr>
-                <td>123414</td>
-                <td>88dsfasd</td>
-                <td>io009099</td>
-                <td>dsfdasfds</td>
-                <td>
-                    <input id="1" type="button" value="编辑"/>
-                    <input id="2" type="button" value="删除"/>
-                </td>
-            </tr>
-            <tr>
-                <td>123414</td>
-                <td>88dsfasd</td>
-                <td>io009099</td>
-                <td>dsfdasfds</td>
-                <td>
-                    <input id="1" type="button" value="编辑"/>
-                    <input id="2" type="button" value="删除"/>
-                </td>
-            </tr>
-            <tr>
-                <td>123414</td>
-                <td>88dsfasd</td>
-                <td>io009099</td>
-                <td>dsfdasfds</td>
-                <td>
-                    <input id="1" type="button" value="修改"/>
-                    <input id="2" type="button" value="删除"/>
-                </td>
-            </tr>
+            {% endfor %}
          </table>
     </div>
 </body>
