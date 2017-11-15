@@ -51,10 +51,11 @@
 
         /* Padding and font style */
         #table-1 td, #table-1 th {
-        padding: 5px 67px;
+        padding: 5px 60px;
         font-size: 12px;
         font-family: Verdana;
         color: rgb(95, 74, 121);
+        text-align:left;
         }
 
         #table-1 th{
@@ -70,7 +71,7 @@
 
         /*表格内容超长显示省略号*/
         .MHover{
-                width:150px;
+                width:50px;
                 white-space:nowrap; /*不换行*/
                 text-overflow:ellipsis;/*超出部分用....代替  */
                 overflow:hidden;/*超出隐藏*/
@@ -80,8 +81,8 @@
         .tableDiv{
         overflow-x: auto;
         overflow-y: auto;
-        height: 500px;
-        width:1000px;
+        height: 450px;
+        width:1200px;
         margin:15px 0px 0px 0px;
         }
         /*add case input*/
@@ -124,12 +125,12 @@
     <!--add table to data -->
     <div>
         <input id="inputBtn" type="button" name="addCase" value="增加用例" onclick="casebtn()"/>
-        <form id="caseAddData" method="POST">
+        <form id="caseAddData"  method="POST">
             <div id="addCaseChild" style="display:none;">
                 </br>
                 <div class="addCaseDiv">
-                    <label id="labelfont" name="iurl">接口url:</label>
-                    <input id="inputUrl" type="text" maxlength="500" style="width:220px;"/>
+                    <label id="labelfont">接口url:</label>
+                    <input name="iurl" id="inputUrl" type="text" maxlength="500" style="width:220px;"/>
                 </div>
                 <div class="addCaseDiv" style="position:relative;left:5px;top:0px;">
                     <label id="labelfont">方法:</label>
@@ -148,8 +149,8 @@
                 </div>
 
                 <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
-                    <label id="labelfont" name="idesc">接口描述:</label>
-                    <input id="inputDesc" type="text" maxlength="300"/>
+                    <label id="labelfont">接口描述:</label>
+                    <input name="idesc" id="inputDesc" type="text" maxlength="300"/>
                 </div>
 
                 </br>
@@ -161,14 +162,15 @@
                     预&nbsp;&nbsp;&nbsp;&nbsp;期:</label>
                 </br>
                 <div style="margin:0px 0px 0px 0px;width:420px;">
-                    <textarea class="dataarea">json</textarea>
+                    <textarea name="idata" class="dataarea">json</textarea>
                 </div>
                 <div style="margin:-61px 0px 0px 470px;width:415px;">
-                    <textarea class="dataarea">json</textarea>
+                    <textarea name="iresult" class="dataarea">json</textarea>
                 </div>
-                <input type="button" value="提交"/>
+                <input type="submit" value="提交"/>
                 <input type="reset" value="重置">
             </div>
+            {% csrf_token %}
         </form>
     </div>
     <!--views is case data -->
@@ -183,24 +185,29 @@
                 <th></th>
             </thead>
 
-            {% for case in caseData %}
+            {% for case in posts %}
             <tr>
                 <td>
-                  <div class="MHover" title="<{{case.ICaseDescription}}>">{{case.ICaseDescription}}</div>
+                  <div class="MHover" title="{{case.ICaseDescription}}">{{case.ICaseDescription}}</div>
                 </td>
                 <td>
-                  <div class="MHover" title="<{{case.ICaseURL}}>">{{case.ICaseURL}}</div>
+                  <div class="MHover" title="{{case.ICaseURL}}">{{case.ICaseURL}}</div>
                 </td>
                 <td>{{case.ICaseMethod}}</td>
                 <td>
-                   <div class="MHover" title="<{{case.ICase_Data}}>">{{case.ICase_Data}}</div>
+                   <div class="MHover" title="{{case.ICase_Data}}">{{case.ICase_Data}}</div>
                 </td>
                 <td>
-                   <div class="MHover" title="<{{case.ICase_ExResult}}>">{{case.ICase_ExResult}}</div>
+                   <div class="MHover" title="{{case.ICase_ExResult}}">{{case.ICase_ExResult}}</div>
                 </td>
                 <td>
-                    <input id="1" type="button" value="编辑"/>
-                    <input id="2" type="button" value="删除"/>
+                    <form id="deloredit" method="post">
+                        <input id="dbtn{{case.id}}" name="dbtn" type="submit" value="删除"/>
+                        <input id="ebtn{{case.id}}" name="dbtn" type="submit" value="编辑"/>
+                        <input name="caseid" type="hidden" value="{{case.id}}"/>
+
+                        {%csrf_token%}
+                    </form>
                 </td>
             </tr>
             {% endfor %}
