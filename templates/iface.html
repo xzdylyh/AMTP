@@ -6,7 +6,8 @@
     <style type="text/css">
         #mainDiv{
             border-bottom: 1px dashed   lightblue;
-            background: rgb(223, 216, 232);
+            /*background: rgb(223, 216, 232);*/
+            background:#DDDDFF;
         }
         #labelfont{
             width:20px;
@@ -59,14 +60,17 @@
         }
 
         #table-1 th{
-        background: rgb(223, 216, 232)
+        /*background: rgb(223, 216, 232)*/
+        background:#CECEFF;
         }
         /* Alternating background colors */
         #table-1 tr:nth-child(even) {
-        background: rgb(223, 216, 232)
+        /*background: rgb(223, 216, 232)*/
+        background:#DDDDFF;
         }
         #table-1 tr:nth-child(odd) {
-        background: #FFF
+        /*background: #FFF  skyblue*/
+        background:#FDFFFF;
         }
 
         /*表格内容超长显示省略号*/
@@ -106,9 +110,15 @@
         }
 
         .divtest{
-            border:1px solid red;
+            /*border:1px solid red;*/
             float:left;
         }
+        .divtest h4{
+            font-family: 'Heiti SC', 'Microsoft YaHei';
+            color: blue;
+            text-align:center;
+        }
+
     </style>
     <script>
         <!--get document id object -->
@@ -227,17 +237,12 @@
                    <div class="MHover" title="{{case.ICase_ExResult}}">{{case.ICase_ExResult}}</div>
                 </td>
                 <td>
-                        <input id="dbtn{{case.id}}" name="dbtn" type="button" value="删除"/>
-                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin()" value="编辑"/>
-                    <!--
+                    <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin()" value="修改"/>
                     <form id="deloredit" method="post">
                         <input id="dbtn{{case.id}}" name="dbtn" type="submit" value="删除"/>
-                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin()" value="编辑"/>
                         <input name="caseid" type="hidden" value="{{case.id}}"/>
-
                         {%csrf_token%}
                     </form>
-                    -->
                 </td>
             </tr>
             {% endfor %}
@@ -247,11 +252,45 @@
     <div id=back style="display:none;POSITION:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.5);filter:alpha(opacity=60);"></div>
     <div id=win style="display:none; POSITION:absolute; left:50%; top:50%; width:500px; height:300px; margin-left:-300px; margin-top:-300px; border:4px solid lightblue; background-color:#edf; text-align:center;">
         <div>
-            <div class="divtest" style="margin:0px 0px 0px 180px;">
-                <h3>编辑测试用例</h3><br>
+            <div class="divtest" style="left:100%;width:100%;">
+                <h4>>>接口测试用例管理>>编辑测试用例</h4>
+                <hr style="height:5px;border:none;border-top:5px groove skyblue;" />
             </div>
-            <div class="divtest" style="margin:180px 0px 0px 240px;">
-                <input name="close" type="button" value="取消" onclick="closeLogin()">
+            <div class="divtest" style="margin:-5px 0px 0px 0px;">
+                <div class="divtest" style="margin:0px 0px 0px 17px;">
+                    <label>url:</label><input name="eurl" type="text"/>
+                    <label>描述:</label><input name="edesc" type="text"/>
+                    <br>
+                </div>
+                <div class="divtest" style="margin:10px 0px 0px 16px;">
+                    <label>方法:</label>
+                    <select name="emethod">
+                        <option value="0">POST</option>
+                        <option value="1">GET</option>
+                    </select>
+                </div>
+                <div class="divtest" style="margin:10px 0px 0px 87px;">
+                    <label>类型:</label>
+                    <select name="etype">
+                        <option value="0">HTTP</option>
+                        <option value="1">WebService</option>
+                    </select>
+                    <br>
+                </div>
+                <div class="divtest" style="margin:10px 0px 0px 15px;">
+                      <label>数据:</label>
+                      <textarea name="edata" class="dataarea"></textarea>
+                </div>
+                <div class="divtest" style="margin:10px 0px 0px 15px;">
+                      <label>预期:</label>
+                      <textarea name="eresult" class="dataarea"></textarea>
+                </div>
+                <div class="divtest" style="margin:3px 0px 0px 130px;">
+                    <input name="confirm" type="button" value="确认" style="width:80px;"/>
+                </div>
+                <div class="divtest" style="margin:-22px 0px 0px 230px;">
+                    <input name="close" type="button" value="取消" style="width:80px;" onclick="closeLogin()"/>
+                </div>
             </div>
         </div>
     </div>

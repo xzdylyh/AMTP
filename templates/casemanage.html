@@ -38,23 +38,36 @@
             margin: 20px 0 0 20px;
             font-family: 'Heiti SC', 'Microsoft YaHei';
             color: brown;
-            cursor:pointer;
         }
 
         #news li{
             height: 26px;
             line-height: 26px;
             border-bottom: 1px dashed   lightblue;
+            cursor:pointer; /*鼠标经过显示手型*/
+        }
+        #news ol{
+            cursor:pointer; /*鼠标经过显示手型*/
+        }
+        /*鼠标经过li背景颜色*/
+        #news li:hover{
+            background-color:lightblue;
+        }
+         /*鼠标经过ol背景颜色*/
+        #news ol:hover{
+            background-color:lightblue;
         }
         .lastLi{
             margin-bottom:-1px ;/*意思是向上移回1px 跟框框重合了*/
         }
 
+        /*ol位置,边框*/
         .olChild{
             border-bottom: 1px dashed   lightblue;
             margin:0px 0px 0px 50px;
             padding:1px
         }
+
     </style>
     <script>
         <!--$函数根据id获取dom对象-->

@@ -18,7 +18,7 @@ def case_manage_iface(request):
         if namebtn == "删除":
             case_interface_table.objects.filter(id=caseid).delete()
 
-        elif namebtn =="编辑":
+        elif namebtn =="修改":
             pass
         else: #插入
             desc = request.POST.get('idesc')
