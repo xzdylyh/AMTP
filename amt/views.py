@@ -13,8 +13,6 @@ def case_manage_iface(request):
     posts = case_interface_table.objects.all()
     if request.method=='POST':
         caseid = request.POST.get('caseid')
-        #delbtn = request.POST.get(caseid)
-        #editbtn = request.POST.get(caseid)
         namebtn =request.POST.get("dbtn")
 
         if namebtn == "删除":

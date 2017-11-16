@@ -38,6 +38,7 @@
             margin: 20px 0 0 20px;
             font-family: 'Heiti SC', 'Microsoft YaHei';
             color: brown;
+            cursor:pointer;
         }
 
         #news li{
@@ -55,6 +56,19 @@
             padding:1px
         }
     </style>
+    <script>
+        <!--$函数根据id获取dom对象-->
+        function $(id){
+            return document.getElementById(id);
+        }
+        <!--点击左侧,选择右假显示页面-->
+        function selectPage(id,fid){
+            var iframe = $(fid);
+            iframe.setAttribute("src","/"+id);
+            var iframeid = $("iframeDiv");
+            iframeid.style.display = "";
+        }
+    </script>
 </head>
 <body>
 
@@ -68,7 +82,7 @@
                 <ui>
                     <li  id="caseM" onclick="document.all.clildCaseM.style.display=(document.all.clildCaseM.style.display =='none')?'':'none'">用例管理</li>
                     <ui id="clildCaseM">
-                       <ol class="olChild">接口测试用例</ol>
+                       <ol class="olChild" id="iface" onclick="selectPage('iface','pageIframe')">接口测试用例</ol>
                        <ol class="olChild">UI测试用例</ol>
                     </ui>
 
@@ -80,8 +94,8 @@
             </div>
         </div>
         <!--右侧内容-->
-        <div class="div3">
-             <iframe src="/iface" width="1034px" height="800px" scrolling="no" frameborder="0"> </iframe>
+        <div id="iframeDiv" class="div3" style="display:none">
+             <iframe id="pageIframe" src="/iface" width="1034px" height="800px" scrolling="no" frameborder="0"> </iframe>
         </div>
     </div>
 

@@ -92,6 +92,23 @@
             *display:inline;
             *zoom:1;
         }
+
+        <!--div遮挡-->
+        #back{
+            display:none;
+            POSITION:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background-color:rgba(255,255,255,0.5); /*背景透明度*/
+            filter:alpha(opacity=60)
+        }
+
+        .divtest{
+            border:1px solid red;
+            float:left;
+        }
     </style>
     <script>
         <!--get document id object -->
@@ -114,7 +131,16 @@
             }
         };
     </script>
-
+    <script>
+        function openLogin(){
+           document.getElementById("win").style.display="";
+           document.getElementById("back").style.display="";
+        }
+        function closeLogin(){
+           document.getElementById("win").style.display="none";
+           document.getElementById("back").style.display="none";
+        }
+    </script>
 </head>
 <body>
     <div id="mainDiv">
@@ -201,17 +227,33 @@
                    <div class="MHover" title="{{case.ICase_ExResult}}">{{case.ICase_ExResult}}</div>
                 </td>
                 <td>
+                        <input id="dbtn{{case.id}}" name="dbtn" type="button" value="删除"/>
+                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin()" value="编辑"/>
+                    <!--
                     <form id="deloredit" method="post">
                         <input id="dbtn{{case.id}}" name="dbtn" type="submit" value="删除"/>
-                        <input id="ebtn{{case.id}}" name="dbtn" type="submit" value="编辑"/>
+                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin()" value="编辑"/>
                         <input name="caseid" type="hidden" value="{{case.id}}"/>
 
                         {%csrf_token%}
                     </form>
+                    -->
                 </td>
             </tr>
             {% endfor %}
          </table>
+    </div>
+    <!--背景遮挡-->
+    <div id=back style="display:none;POSITION:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.5);filter:alpha(opacity=60);"></div>
+    <div id=win style="display:none; POSITION:absolute; left:50%; top:50%; width:500px; height:300px; margin-left:-300px; margin-top:-300px; border:4px solid lightblue; background-color:#edf; text-align:center;">
+        <div>
+            <div class="divtest" style="margin:0px 0px 0px 180px;">
+                <h3>编辑测试用例</h3><br>
+            </div>
+            <div class="divtest" style="margin:180px 0px 0px 240px;">
+                <input name="close" type="button" value="取消" onclick="closeLogin()">
+            </div>
+        </div>
     </div>
 </body>
 </html>
