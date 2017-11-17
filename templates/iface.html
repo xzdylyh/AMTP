@@ -158,9 +158,9 @@
         function openLogin(urlv,descv,edatav,eresultv,emethodv){
            $("eurl").value = urlv; /*url*/
            $("edesc").value = descv; /*描述/
-           $("edata").value = edatav;/*数据*/
-           $("eresult").value = eresultv; /*预期结果*/
            $("emethod").value = emethodv; /*方法*/
+           $("edata1").value =edatav;
+           $("eresult").value = eresultv; /*预期结果*/
 
            document.getElementById("win").style.display=""; /*设置可见*/
            document.getElementById("back").style.display="";/*设置可见*/
@@ -304,7 +304,7 @@
                     </div>
                     <div class="divtest" style="margin:10px 0px 0px 15px;">
                           <label>数据:</label>
-                          <textarea name="edata" id="edata" class="dataarea"></textarea>
+                          <textarea name="edata" id="edata1" class="dataarea"></textarea>
                     </div>
                     <div class="divtest" style="margin:10px 0px 0px 15px;">
                           <label>预期:</label>
