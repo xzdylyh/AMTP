@@ -11,6 +11,7 @@ def case_manage_page(request):
 
 def case_manage_iface(request):
     posts = case_interface_table.objects.all()
+    editData = ""
     if request.method=='POST':
         caseid = request.POST.get('caseid')
         namebtn =request.POST.get("dbtn")
@@ -19,7 +20,7 @@ def case_manage_iface(request):
             case_interface_table.objects.filter(id=caseid).delete()
 
         elif namebtn =="修改":
-            pass
+            editData = case_interface_table.objects.get(id=caseid)
         else: #插入
             desc = request.POST.get('idesc')
             url = request.POST.get('iurl')
@@ -43,4 +44,4 @@ def case_manage_iface(request):
             case_interface_table.objects.create(**insertData)
         posts = case_interface_table.objects.all()
 
-    return render(request,"iface.html",{"posts":posts,})
+    return render(request,"iface.html",{"posts":posts,"editPosts":editData,})

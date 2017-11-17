@@ -109,6 +109,7 @@
             filter:alpha(opacity=60)
         }
 
+
         .divtest{
             /*border:1px solid red;*/
             float:left;
@@ -119,7 +120,19 @@
             text-align:center;
         }
 
+        <!--
+        <!--所有输入框样式-->
+        .divInput input{
+             border: 1px solid #ccc;
+             padding: 7px 0px;
+             border-radius: 4px; /*css3属性IE不支持*/
+             padding-left:5px;
+        }
+        -->
+
+
     </style>
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
     <script>
         <!--get document id object -->
         function $(id){
@@ -142,154 +155,167 @@
         };
     </script>
     <script>
-        function openLogin(){
-           document.getElementById("win").style.display="";
-           document.getElementById("back").style.display="";
+        function openLogin(urlv,descv,edatav,eresultv,emethodv){
+           $("eurl").value = urlv; /*url*/
+           $("edesc").value = descv; /*描述/
+           $("edata").value = edatav;/*数据*/
+           $("eresult").value = eresultv; /*预期结果*/
+           $("emethod").value = emethodv; /*方法*/
+
+           document.getElementById("win").style.display=""; /*设置可见*/
+           document.getElementById("back").style.display="";/*设置可见*/
         }
         function closeLogin(){
            document.getElementById("win").style.display="none";
            document.getElementById("back").style.display="none";
         }
+
     </script>
+
+
 </head>
 <body>
-    <div id="mainDiv">
-        <label id="labelfont">>>用例管理>>接口测试用例管理</label>
-    </div>
-    </br>
-
-    <!--add table to data -->
     <div>
-        <input id="inputBtn" type="button" name="addCase" value="增加用例" onclick="casebtn()"/>
-        <form id="caseAddData"  method="POST">
-            <div id="addCaseChild" style="display:none;">
-                </br>
-                <div class="addCaseDiv">
-                    <label id="labelfont">接口url:</label>
-                    <input name="iurl" id="inputUrl" type="text" maxlength="500" style="width:220px;"/>
+        <div id="mainDiv">
+            <label id="labelfont">>>用例管理>>接口测试用例管理</label>
+        </div>
+        </br>
+
+        <!--add table to data -->
+        <div>
+            <input id="inputBtn" type="button" name="addCase" value="增加用例" onclick="casebtn()"/>
+            <form id="caseAddData"  method="POST" onsubmit="alert('已增加!')">
+                <div id="addCaseChild" style="display:none;">
+                    </br>
+                    <div class="addCaseDiv">
+                        <label id="labelfont">接口url:</label>
+                        <input name="iurl" id="inputUrl" type="text" maxlength="500" style="width:220px;"/>
+                    </div>
+                    <div class="addCaseDiv" style="position:relative;left:5px;top:0px;">
+                        <label id="labelfont">方法:</label>
+                            <select name="imethod">
+                                <option value="0">POST</option>
+                                <option value="1">GET</option>
+                            </select>
+                    </div>
+
+                    <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
+                        <label id="labelfont">类型:</label>
+                            <select name="itype">
+                                <option value="0">HTTP</option>
+                                <option value="1">WebServices</option>
+                            </select>
+                    </div>
+
+                    <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
+                        <label id="labelfont">接口描述:</label>
+                        <input name="idesc" id="inputDesc" type="text" maxlength="300"/>
+                    </div>
+
+                    </br>
+                    <label id="labelfont">数&nbsp;&nbsp;&nbsp;&nbsp;据:</label>
+                    <label id="labelfont">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        预&nbsp;&nbsp;&nbsp;&nbsp;期:</label>
+                    </br>
+                    <div style="margin:0px 0px 0px 0px;width:420px;">
+                        <textarea name="idata" class="dataarea">json</textarea>
+                    </div>
+                    <div style="margin:-61px 0px 0px 470px;width:415px;">
+                        <textarea name="iresult" class="dataarea">json</textarea>
+                    </div>
+                    <input type="submit" style="width:45px;" value="提交"/>
+                    <input type="reset" style="width:45px;" value="重置">
                 </div>
-                <div class="addCaseDiv" style="position:relative;left:5px;top:0px;">
-                    <label id="labelfont">方法:</label>
-                        <select name="imethod">
+                {% csrf_token %}
+            </form>
+        </div>
+        <!--views is case data -->
+        <div class="tableDiv">
+             <table  id="table-1">
+                <thead>
+                    <th>接口描述</th>
+                    <th>接口地址</th>
+                    <th>方法</th>
+                    <th>数据</th>
+                    <th>预期</th>
+                    <th></th>
+                </thead>
+
+                {% for case in posts %}
+                <tr>
+                    <td>
+                      <div class="MHover" title="{{case.ICaseDescription}}">{{case.ICaseDescription}}</div>
+                    </td>
+                    <td>
+                      <div class="MHover" title="{{case.ICaseURL}}">{{case.ICaseURL}}</div>
+                    </td>
+                    <td>{{case.ICaseMethod}}</td>
+                    <td>
+                       <div class="MHover" title="{{case.ICase_Data}}">{{case.ICase_Data}}</div>
+                    </td>
+                    <td>
+                       <div class="MHover" title="{{case.ICase_ExResult}}">{{case.ICase_ExResult}}</div>
+                    </td>
+                    <td>
+
+                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin('{{case.ICaseURL}}','{{case.ICaseDescription}}','{{case.ICase_Data}}','{{case.ICase_ExResult}}','{{case.ICaseMethod}}')" value="修改"/>
+                        <form id="deloredit" method="post">
+
+                            <input id="dbtn{{case.id}}" name="dbtn" type="submit" value="删除"/>
+                            <input name="caseid" type="hidden" value="{{case.id}}"/>
+                            {%csrf_token%}
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+             </table>
+        </div>
+        <!--背景遮挡-->
+        <div id=back style="display:none;POSITION:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.5);filter:alpha(opacity=60);"></div>
+        <div id=win style="display:none; POSITION:absolute; left:50%; top:50%; width:500px; height:300px; margin-left:-300px; margin-top:-300px; border:4px solid lightblue; background-color:#edf; text-align:center;">
+            <div>
+                <div class="divtest" style="left:100%;width:100%;">
+                    <h4>>>接口测试用例管理>>编辑测试用例</h4>
+                    <hr style="height:5px;border:none;border-top:5px groove skyblue;" />
+                </div>
+                <div class="divtest" style="margin:-5px 0px 0px 0px;">
+                    <div class="divtest" style="margin:0px 0px 0px 17px;">
+                        <label>url:</label><input name="eurl" id="eurl" type="text"/>
+                        <label>描述:</label><input name="edesc" id="edesc" type="text"/>
+                        <br>
+                    </div>
+                    <div class="divtest" style="margin:10px 0px 0px 16px;">
+                        <label>方法:</label>
+                        <select name="emethod" id="emethod">
                             <option value="0">POST</option>
                             <option value="1">GET</option>
                         </select>
-                </div>
-
-                <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
-                    <label id="labelfont">类型:</label>
-                        <select name="itype">
+                    </div>
+                    <div class="divtest" style="margin:10px 0px 0px 87px;">
+                        <label>类型:</label>
+                        <select name="etype" id="etype">
                             <option value="0">HTTP</option>
-                            <option value="1">WebServices</option>
+                            <option value="1">WebService</option>
                         </select>
-                </div>
-
-                <div class="addCaseDiv" style="position:relative;left:10px;top:0px;">
-                    <label id="labelfont">接口描述:</label>
-                    <input name="idesc" id="inputDesc" type="text" maxlength="300"/>
-                </div>
-
-                </br>
-                <label id="labelfont">数&nbsp;&nbsp;&nbsp;&nbsp;据:</label>
-                <label id="labelfont">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    预&nbsp;&nbsp;&nbsp;&nbsp;期:</label>
-                </br>
-                <div style="margin:0px 0px 0px 0px;width:420px;">
-                    <textarea name="idata" class="dataarea">json</textarea>
-                </div>
-                <div style="margin:-61px 0px 0px 470px;width:415px;">
-                    <textarea name="iresult" class="dataarea">json</textarea>
-                </div>
-                <input type="submit" value="提交"/>
-                <input type="reset" value="重置">
-            </div>
-            {% csrf_token %}
-        </form>
-    </div>
-    <!--views is case data -->
-    <div class="tableDiv">
-         <table  id="table-1">
-            <thead>
-                <th>接口描述</th>
-                <th>接口地址</th>
-                <th>方法</th>
-                <th>数据</th>
-                <th>预期</th>
-                <th></th>
-            </thead>
-
-            {% for case in posts %}
-            <tr>
-                <td>
-                  <div class="MHover" title="{{case.ICaseDescription}}">{{case.ICaseDescription}}</div>
-                </td>
-                <td>
-                  <div class="MHover" title="{{case.ICaseURL}}">{{case.ICaseURL}}</div>
-                </td>
-                <td>{{case.ICaseMethod}}</td>
-                <td>
-                   <div class="MHover" title="{{case.ICase_Data}}">{{case.ICase_Data}}</div>
-                </td>
-                <td>
-                   <div class="MHover" title="{{case.ICase_ExResult}}">{{case.ICase_ExResult}}</div>
-                </td>
-                <td>
-                    <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin()" value="修改"/>
-                    <form id="deloredit" method="post">
-                        <input id="dbtn{{case.id}}" name="dbtn" type="submit" value="删除"/>
-                        <input name="caseid" type="hidden" value="{{case.id}}"/>
-                        {%csrf_token%}
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-         </table>
-    </div>
-    <!--背景遮挡-->
-    <div id=back style="display:none;POSITION:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.5);filter:alpha(opacity=60);"></div>
-    <div id=win style="display:none; POSITION:absolute; left:50%; top:50%; width:500px; height:300px; margin-left:-300px; margin-top:-300px; border:4px solid lightblue; background-color:#edf; text-align:center;">
-        <div>
-            <div class="divtest" style="left:100%;width:100%;">
-                <h4>>>接口测试用例管理>>编辑测试用例</h4>
-                <hr style="height:5px;border:none;border-top:5px groove skyblue;" />
-            </div>
-            <div class="divtest" style="margin:-5px 0px 0px 0px;">
-                <div class="divtest" style="margin:0px 0px 0px 17px;">
-                    <label>url:</label><input name="eurl" type="text"/>
-                    <label>描述:</label><input name="edesc" type="text"/>
-                    <br>
-                </div>
-                <div class="divtest" style="margin:10px 0px 0px 16px;">
-                    <label>方法:</label>
-                    <select name="emethod">
-                        <option value="0">POST</option>
-                        <option value="1">GET</option>
-                    </select>
-                </div>
-                <div class="divtest" style="margin:10px 0px 0px 87px;">
-                    <label>类型:</label>
-                    <select name="etype">
-                        <option value="0">HTTP</option>
-                        <option value="1">WebService</option>
-                    </select>
-                    <br>
-                </div>
-                <div class="divtest" style="margin:10px 0px 0px 15px;">
-                      <label>数据:</label>
-                      <textarea name="edata" class="dataarea"></textarea>
-                </div>
-                <div class="divtest" style="margin:10px 0px 0px 15px;">
-                      <label>预期:</label>
-                      <textarea name="eresult" class="dataarea"></textarea>
-                </div>
-                <div class="divtest" style="margin:3px 0px 0px 130px;">
-                    <input name="confirm" type="button" value="确认" style="width:80px;"/>
-                </div>
-                <div class="divtest" style="margin:-22px 0px 0px 230px;">
-                    <input name="close" type="button" value="取消" style="width:80px;" onclick="closeLogin()"/>
+                        <br>
+                    </div>
+                    <div class="divtest" style="margin:10px 0px 0px 15px;">
+                          <label>数据:</label>
+                          <textarea name="edata" id="edata" class="dataarea"></textarea>
+                    </div>
+                    <div class="divtest" style="margin:10px 0px 0px 15px;">
+                          <label>预期:</label>
+                          <textarea name="eresult" id="eresult" class="dataarea"></textarea>
+                    </div>
+                    <div class="divtest" style="margin:3px 0px 0px 130px;">
+                        <input name="confirm" type="button" value="确认" />
+                    </div>
+                    <div class="divtest" style="margin:3px 0px 0px 50px;">
+                        <input name="close" type="button" value="取消"  onclick="closeLogin()"/>
+                    </div>
                 </div>
             </div>
         </div>
