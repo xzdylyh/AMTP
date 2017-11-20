@@ -15,12 +15,25 @@ def case_manage_iface(request):
     if request.method=='POST':
         caseid = request.POST.get('caseid')
         namebtn =request.POST.get("dbtn")
-
+        confirmCase =request.POST.get("confirmCase")
         if namebtn == "删除":
             case_interface_table.objects.filter(id=caseid).delete()
-
         elif namebtn =="修改":
             editData = case_interface_table.objects.get(id=caseid)
+        elif confirmCase =="确认修改":
+            desc = request.POST.get('edesc')
+            eurl = request.POST.get('eurl')
+            method = request.POST.get('emethod')
+            data = request.POST.get('edata')
+            Exresult= request.POST.get('eresult')
+            mcaseid = caseid = request.POST.get('mcaseid')
+            MdfData = case_interface_table.objects.get(id=mcaseid)
+            MdfData.ICaseURL = eurl
+            MdfData.ICaseDescription = desc
+            MdfData.ICaseMethod = method
+            MdfData.ICase_Data = data
+            MdfData.ICase_ExResult = Exresult
+            MdfData.save()
         else: #插入
             desc = request.POST.get('idesc')
             url = request.POST.get('iurl')

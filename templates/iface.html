@@ -155,13 +155,19 @@
         };
     </script>
     <script>
-        function openLogin(urlv,descv,edatav,eresultv,emethodv){
+        function setSelectVal(index,id){
+            var selectArr = $(id).getElementsByTagName("option");
+            selectArr[index].selected =true;
+        }
+
+        function openLogin(urlv,descv,edatav,eresultv,emethodv,caseid){
+
            $("eurl").value = urlv; /*url*/
            $("edesc").value = descv; /*描述/
-           $("emethod").value = emethodv; /*方法*/
+           this.setSelectVal(emethodv,"emethod1");
            $("edata1").value =edatav;
            $("eresult").value = eresultv; /*预期结果*/
-
+           $("mcaseid").value =caseid;
            document.getElementById("win").style.display=""; /*设置可见*/
            document.getElementById("back").style.display="";/*设置可见*/
         }
@@ -184,7 +190,7 @@
         <!--add table to data -->
         <div>
             <input id="inputBtn" type="button" name="addCase" value="增加用例" onclick="casebtn()"/>
-            <form id="caseAddData"  method="POST" onsubmit="alert('已增加!')">
+            <form id="caseAddData"  method="POST" onsubmit="alert('提示消息:增加成功!')">
                 <div id="addCaseChild" style="display:none;">
                     </br>
                     <div class="addCaseDiv">
@@ -261,11 +267,11 @@
                     </td>
                     <td>
 
-                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin('{{case.ICaseURL}}','{{case.ICaseDescription}}','{{case.ICase_Data}}','{{case.ICase_ExResult}}','{{case.ICaseMethod}}')" value="修改"/>
+                        <input id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin('{{case.ICaseURL}}','{{case.ICaseDescription}}','{{case.ICase_Data}}','{{case.ICase_ExResult}}','{{case.ICaseMethod}}','{{case.id}}')" value="修改"/>
                         <form id="deloredit" method="post">
 
                             <input id="dbtn{{case.id}}" name="dbtn" type="submit" value="删除"/>
-                            <input name="caseid" type="hidden" value="{{case.id}}"/>
+                            <input name="caseid" id="caseid" type="hidden" value="{{case.id}}"/>
                             {%csrf_token%}
                         </form>
                     </td>
@@ -282,40 +288,44 @@
                     <hr style="height:5px;border:none;border-top:5px groove skyblue;" />
                 </div>
                 <div class="divtest" style="margin:-5px 0px 0px 0px;">
-                    <div class="divtest" style="margin:0px 0px 0px 17px;">
-                        <label>url:</label><input name="eurl" id="eurl" type="text"/>
-                        <label>描述:</label><input name="edesc" id="edesc" type="text"/>
-                        <br>
-                    </div>
-                    <div class="divtest" style="margin:10px 0px 0px 16px;">
-                        <label>方法:</label>
-                        <select name="emethod" id="emethod">
-                            <option value="0">POST</option>
-                            <option value="1">GET</option>
-                        </select>
-                    </div>
-                    <div class="divtest" style="margin:10px 0px 0px 87px;">
-                        <label>类型:</label>
-                        <select name="etype" id="etype">
-                            <option value="0">HTTP</option>
-                            <option value="1">WebService</option>
-                        </select>
-                        <br>
-                    </div>
-                    <div class="divtest" style="margin:10px 0px 0px 15px;">
-                          <label>数据:</label>
-                          <textarea name="edata" id="edata1" class="dataarea"></textarea>
-                    </div>
-                    <div class="divtest" style="margin:10px 0px 0px 15px;">
-                          <label>预期:</label>
-                          <textarea name="eresult" id="eresult" class="dataarea"></textarea>
-                    </div>
-                    <div class="divtest" style="margin:3px 0px 0px 130px;">
-                        <input name="confirm" type="button" value="确认" />
-                    </div>
-                    <div class="divtest" style="margin:3px 0px 0px 50px;">
-                        <input name="close" type="button" value="取消"  onclick="closeLogin()"/>
-                    </div>
+                    <form name="modiflyCase" method="POST" onsubmit="alert('提示消息:修改完成.')">
+                        <input name="mcaseid" id="mcaseid" type="hidden">
+                        <div class="divtest" style="margin:0px 0px 0px 17px;">
+                            <label>url:</label><input name="eurl" id="eurl" type="text"/>
+                            <label>描述:</label><input name="edesc" id="edesc" type="text"/>
+                            <br>
+                        </div>
+                        <div class="divtest" style="margin:10px 0px 0px 16px;">
+                            <label>方法:</label>
+                            <select name="emethod" id="emethod1">
+                                <option value="0">POST</option>
+                                <option value="1">GET</option>
+                            </select>
+                        </div>
+                        <div class="divtest" style="margin:10px 0px 0px 87px;">
+                            <label>类型:</label>
+                            <select name="etype" id="etype">
+                                <option value="0">HTTP</option>
+                                <option value="1">WebService</option>
+                            </select>
+                            <br>
+                        </div>
+                        <div class="divtest" style="margin:10px 0px 0px 15px;">
+                              <label>数据:</label>
+                              <textarea name="edata" id="edata1" class="dataarea"></textarea>
+                        </div>
+                        <div class="divtest" style="margin:10px 0px 0px 15px;">
+                              <label>预期:</label>
+                              <textarea name="eresult" id="eresult" class="dataarea"></textarea>
+                        </div>
+                        <div class="divtest" style="margin:3px 0px 0px 130px;">
+                            <input name="confirmCase" type="submit" value="确认修改" />
+                        </div>
+                        <div class="divtest" style="margin:3px 0px 0px 50px;">
+                            <input name="close" type="button" value="取消"  onclick="closeLogin()"/>
+                        </div>
+                        {%csrf_token%}
+                    </form>
                 </div>
             </div>
         </div>
