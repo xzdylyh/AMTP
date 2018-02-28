@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="gb2312"> 
+	<title>实例</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script>
+            function add_c(){
+	    	var cname = document.getElementById('c-name');
+	    	var ul = document.getElementById('c_list_1');
+            	var li = document.createElement('li');
+ 	    	li.innerHTML='<a href="#">'+cname.value+'</a>   <button type="button" class="btn btn-warning btn-xs">  <span class="glyphicon glyphicon-remove"></span> </button>';
+            	ul.appendChild(li);
+	    }
+
+
+	</script>
+    </head>
+
+    <body>
+	<div class="container">
+	    <div class="row">
+		<form role="form">
+		<div class="col-xs-5 col-sm-3">
+
+		      <div class="panel panel-default">
+		          <div class="panel-heading">
+                            <div class="form-group">
+			        <div class="input-group">
+		    	            <input type="text" class="form-control" id="c-name" placeholder="请输入场景名称">
+				    <span class="input-group-addon">
+				       <a href="javascript:void(0)" onclick="add_c()" >增加</a>
+			            </span>
+				</div>
+		            </div>
+			  </div>
+			  <div class="panel-body">
+			      <ul id="c_list_1">
+
+                  </ul>
+			  </div>
+		      </div>
+		</div>
+		<div class="col-xs-4 col-sm-9">
+
+		    <table class="table table-striped  table-hover table-condensed">
+			<thead>
+			   <tr>
+			       <td>
+                      <button type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span> 增加
+                      </button>
+                      <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-ok"></span> 提交
+                      </button>
+			       </td>
+			       <td></td>
+			       <td></td>
+			   </tr>
+			   <tr>
+				<th>接口名称</th>
+				<th>Token</th>
+				<th>操作</th>
+			   </tr>
+			</thead>
+			<tbody>
+			    <div class="form-group">
+			        <tr>
+			            <td><lable class="form-control" id="if_name">Tanmay</lable></td>
+				    <td><input type="text" class="form-control" id="token_name"></td>
+				    <td>
+				        <button type="button" class="btn btn-default">
+					    <span class="glyphicon glyphicon-wrench"></span> 编辑
+					</button>
+				        <button type="button" class="btn btn-default">
+					    <span class="glyphicon glyphicon-remove"></span> 删除
+					</button>
+				    </td>
+
+			        </tr>
+                            </div>
+			</tbody>
+		    </table>
+		  </form>
+		</div>
+            </div>
+
+	</div>
+    </body>
+
+</html>
