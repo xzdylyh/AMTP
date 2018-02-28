@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^casemanage/$', views.case_manage_page),
     url(r'^iface/$',views.case_manage_iface),
+    url(r'scenario_manage',views.scenario_manage),
 ]

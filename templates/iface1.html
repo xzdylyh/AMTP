@@ -134,7 +134,7 @@
                                 </td>
                                 <td>
 
-                                    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin('{{case.ICaseURL}}','{{case.ICaseDescription}}','{{case.ICase_Data}}','{{case.ICase_ExResult}}','{{case.ICaseMethod}}','{{case.id}}')">
+                                    <button class="btn btn-default btn-xs" id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin('{{case.ICaseURL}}','{{case.ICaseDescription}}','{{case.ICase_Data}}','{{case.ICase_ExResult}}','{{case.ICaseMethod}}','{{case.id}}')">
                                         <span class="glyphicon glyphicon-wrench"></span> 修改
                                     </button>
                                     <form id="deloredit" method="post">
@@ -152,74 +152,57 @@
                         </tbody>
                      </table>
                 </div>
-                <!--模态框-->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title"><a href="#">>>接口测试用例管理>>编辑测试用例</a></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                        <form class="form-horizontal" role="form" method="POST" onsubmit="alert('提示消息:修改完成.')">
-                                            <div class="form-group">
-                                                <input name="mcaseid" id="mcaseid" type="hidden">
-                                            </div>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">url:</span>
-                                                <input class="form-control" name="eurl" id="eurl" type="text"/>
-                                            </div>
-                                            <br>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">描述:</span>
-                                                <input class="form-control" name="edesc" id="edesc" type="text"/>
-                                            </div>
-                                            <br>
-                                            <div class="input-group" style="padding: 1px 1px 10px;">
-                                                <span class="input-group-addon">方法:</span>
-                                                <select class="form-control" name="emethod" id="emethod1">
-                                                    <option value="0">POST</option>
-                                                    <option value="1">GET</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="input-group">
-                                                <span class="input-group-addon">类型:</span>
-                                                <select class="form-control" name="etype" id="etype">
-                                                    <option value="0">HTTP</option>
-                                                    <option value="1">WebService</option>
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                  <label for="data">数据:</label>
-                                                  <textarea name="edata" id="edata1" class="dataarea"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                  <label for="exresult">预期:</label>
-                                                  <textarea name="eresult" id="eresult" class="dataarea"></textarea>
-                                            </div>
-
-                                            <div class="btn btn-default">
-                                                <button name="confirmCase" type="submit">
-                                                    <span class="glyphicon glyphicon-ok"></span> 确认修改
-                                                </button>
-                                            </div>
-                                            <div class="btn btn-default">
-                                                <button data-dismiss="modal" name="close" type="button"  onclick="closeLogin()">
-                                                    <span class="glyphicon glyphicon-remove"></span> 取消
-                                                </button>
-                                            </div>
-                                            {%csrf_token%}
-                                        </form>
-                                    </div>
+                <!--背景遮挡-->
+                <div id=back style="display:none;POSITION:absolute;left:0;top:0;width:100%;height:100%;background-color:rgba(255,255,255,0.5);filter:alpha(opacity=60);"></div>
+                <div id=win style="display:none; POSITION:absolute; left:50%; top:50%; width:500px; height:300px; margin-left:-300px; margin-top:-300px; border:4px solid lightblue; background-color:#edf; text-align:center;">
+                    <div>
+                        <div class="divtest" style="left:100%;width:100%;">
+                            <label><a href="#">>>接口测试用例管理>>编辑测试用例</a></label>
+                            <hr style="height:5px;border:none;border-top:5px groove skyblue;" />
+                        </div>
+                        <div class="divtest" style="margin:-5px 0px 0px 0px;">
+                            <form class="form-horizontal" role="form" name="modiflyCase" method="POST" onsubmit="alert('提示消息:修改完成.')">
+                                <input name="mcaseid" id="mcaseid" type="hidden">
+                                <div class="divtest" style="margin:0px 0px 0px 17px;">
+                                    <label>url:</label><input name="eurl" id="eurl" type="text"/>
+                                    <label>描述:</label><input name="edesc" id="edesc" type="text"/>
+                                    <br>
                                 </div>
-                            </div>
-
+                                <div class="divtest" style="margin:10px 0px 0px 16px;">
+                                    <label>方法:</label>
+                                    <select name="emethod" id="emethod1">
+                                        <option value="0">POST</option>
+                                        <option value="1">GET</option>
+                                    </select>
+                                </div>
+                                <div class="divtest" style="margin:10px 0px 0px 87px;">
+                                    <label>类型:</label>
+                                    <select name="etype" id="etype">
+                                        <option value="0">HTTP</option>
+                                        <option value="1">WebService</option>
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="divtest" style="margin:10px 0px 0px 15px;">
+                                      <label>数据:</label>
+                                      <textarea name="edata" id="edata1" class="dataarea"></textarea>
+                                </div>
+                                <div class="divtest" style="margin:10px 0px 0px 15px;">
+                                      <label>预期:</label>
+                                      <textarea name="eresult" id="eresult" class="dataarea"></textarea>
+                                </div>
+                                <div class="divtest" style="margin:3px 0px 0px 130px;">
+                                    <input name="confirmCase" type="submit" value="确认修改" />
+                                </div>
+                                <div class="divtest" style="margin:3px 0px 0px 50px;">
+                                    <input name="close" type="button" value="取消"  onclick="closeLogin()"/>
+                                </div>
+                                {%csrf_token%}
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </body>

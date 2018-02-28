@@ -20,7 +20,7 @@ def case_manage_iface(request):
             case_interface_table.objects.filter(id=caseid).delete()
         elif namebtn =="修改":
             editData = case_interface_table.objects.get(id=caseid)
-        elif confirmCase =="确认修改":
+        elif confirmCase != None:
             desc = request.POST.get('edesc')
             eurl = request.POST.get('eurl')
             method = request.POST.get('emethod')
@@ -58,3 +58,7 @@ def case_manage_iface(request):
         posts = case_interface_table.objects.all()
 
     return render(request,"iface.html",{"posts":posts,"editPosts":editData,})
+
+
+def  scenario_manage(request):
+    pass

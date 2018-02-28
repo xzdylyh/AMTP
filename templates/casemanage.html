@@ -1,49 +1,19 @@
 <!DOCTYPE html>
 <html>
-<title>AM</title>
-<head lang="en">
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-        }
 
-        .divMain{
-            height:40px;
-            width:1272px;
-            border:1px lightblue solid;
-            /*background: rgb(223, 216, 232);*/
-            position:relative;
-            left:20px;
-        }
-        .div1{
-        width:1334px;
-        height:615px;
-        overflow:hidden;zoom:1;
-        margin-top: 10px;
-        }
-        .div2 {
-        width:260px;
-        height:614px;
-        float:left;
-        }
-        .div3 {
-            width:1032px;
-            height:614px;
-            border:1px lightblue solid;
-            float:left;
-        }
+<head lang="en">
+	<meta charset="utf-8">
+	<title>AM自动化测试平台</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
         #news {
-            width: 200px;
-            border: 2px solid lightblue;
-            margin: 20px 0 0 20px;
-            font-family: 'Heiti SC', 'Microsoft YaHei';
-            color: brown;
+
         }
 
         #news li{
-            height: 26px;
-            line-height: 26px;
             border-bottom: 1px dashed   lightblue;
             cursor:pointer; /*鼠标经过显示手型*/
         }
@@ -52,11 +22,11 @@
         }
         /*鼠标经过li背景颜色*/
         #news li:hover{
-            background-color:lightblue;
+            background-color:RGB(220,220,220);
         }
          /*鼠标经过ol背景颜色*/
         #news ol:hover{
-            background-color:lightblue;
+            background-color:RGB(220,220,220);
         }
         .lastLi{
             margin-bottom:-1px ;/*意思是向上移回1px 跟框框重合了*/
@@ -81,35 +51,66 @@
             iframe.setAttribute("src","/"+id);
             var iframeid = $("iframeDiv");
             iframeid.style.display = "";
+            var lc = $("load_content");
+            lc.style.display="none";
         }
     </script>
 </head>
 <body>
+    <!--导航栏-->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">AM自动化测试平台</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">使用说明</a></li>
 
-    <div class="divMain">
-        divmain
-    </div>
-    <div class="div1">
-        <!--左侧目录--->
-        <div class="div2">
-            <div id="news">
-                <ui>
-                    <li  id="caseM" onclick="document.all.clildCaseM.style.display=(document.all.clildCaseM.style.display =='none')?'':'none'">用例管理</li>
-                    <ui id="clildCaseM">
-                       <ol class="olChild" id="iface" onclick="selectPage('iface','pageIframe')">接口测试用例</ol>
-                       <ol class="olChild">UI测试用例</ol>
-                    </ui>
-
-                    <li>测试套件</li>
-                    <li>测试执行</li>
-                    <li>测试报告</li>
-                    <li class="lastLi">报表展示</li>
-                </ui>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            用户管理 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人信息</a></li>
+                            <li><a href="#">权限管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">关于AM</a></li>
+                </ul>
             </div>
         </div>
-        <!--右侧内容-->
-        <div id="iframeDiv" class="div3" style="display:none">
-             <iframe id="pageIframe" src="/iface" width="1034px" height="800px" scrolling="no" frameborder="0"> </iframe>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="span3 col-lg-2">
+                <!--左侧目录--->
+                <div>
+                    <div id="news">
+                        <ui class="list-group">
+                            <li class="list-group-item"  id="caseM" onclick="document.all.clildCaseM.style.display=(document.all.clildCaseM.style.display =='none')?'':'none'">用例管理</li>
+                            <ui id="list-group">
+                               <ol class="olChild" id="iface" onclick="selectPage('iface','pageIframe')">接口测试用例</ol>
+                               <ol class="olChild">UI测试用例</ol>
+                            </ui>
+
+                            <li class="list-group-item">测试套件</li>
+                            <li class="list-group-item">测试执行</li>
+                            <li class="list-group-item">测试报告</li>
+                            <li class="lastLi list-group-item lastLi">报表展示</li>
+                        </ui>
+                    </div>
+                </div>
+            </div>
+            <div class="span9 col-lg-10">
+                <div id="load_content">
+                    <p>Phishing Phishing scams can be very elaborate, scammers send out emails to millions of internet addresses purporting to be from a financial institution, and requiring you to log in and confirm your details. The email looks authentic and contains a link that you need to click. If you happen to have an account at the bank featured in the scam then it's a very natural thing to click the link and login to "your" account except it's not your account or even your bank. It will be a website setup by the scammers to extract as much information from you as possible, Name, Address Credit card details, Bank login, Password, PIN number etc. Once they have these details it is very likely that will have access to your funds and in the worse case your identity. Avoid these scams by never clicking on a link in an email like these, Banks do not sent out emails requesting you login and confirm your details.</p>
+                </div>
+                <!--右侧内容-->
+                <div id="iframeDiv" class="div3" style="display:none">
+                     <iframe id="pageIframe" src="/iface" width="1034px" height="800px" scrolling="no" frameborder="0"> </iframe>
+                </div>
+            </div>
         </div>
     </div>
 
