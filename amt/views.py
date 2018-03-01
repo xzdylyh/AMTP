@@ -10,7 +10,13 @@ def case_manage_page(request):
     return render(request,"casemanage.html")
 
 def case_manage_iface(request):
-    posts = case_interface_table.objects.all()
+
+    curPage = int(request.GET.get('page','1'))
+    allPage = case_interface_table.objects.all().count()
+    fpage = pageInfo(curPage,allPage)
+    fpageCount = fpage.pager()
+
+    posts = case_interface_table.objects.all()[fpage.start:fpage.end]
     editData = ""
     if request.method=='POST':
         caseid = request.POST.get('caseid')
@@ -55,10 +61,49 @@ def case_manage_iface(request):
                 "IcaseFiled5":""
             }
             case_interface_table.objects.create(**insertData)
-        posts = case_interface_table.objects.all()
+        posts = case_interface_table.objects.all()[fpage.start:fpage.end]
 
-    return render(request,"iface.html",{"posts":posts,"editPosts":editData,})
+    return render(request,"iface.html",{"posts":posts,"editPosts":editData,"fpageCount":fpageCount,})
 
 
 def  scenario_manage(request):
     pass
+
+
+def login_ajax(request):
+    return render(request,"login.html")
+
+
+class pageInfo(object):
+    def __init__(self,curpage,allpage):
+        self.curpage = int(curpage)
+        self.allpage = allpage
+
+    @property
+    def start(self):
+        return (self.curpage -1) * 5
+
+    @property
+    def end(self):
+        return self.curpage * 5
+
+
+    def pager(self):
+
+        page,pct = divmod(self.allpage,5) #总共可以分多少页
+        if pct == 0:
+            page =page
+        else:
+            page = page + 1
+
+        tmplist =[]
+        tmp=''
+
+        for i in range(page):
+            if self.curpage !=i:
+                tmp += "<li><a href='/iface?page=%d'>%d</a></li>"%(i+1,i+1,)
+
+            else:
+                tmp ="<li class='active'><a href='/iface?page=%d'>%d</a></li>"%(i+1,i+1,)
+            tmplist.append(tmp)
+        return ''.join(tmplist)
