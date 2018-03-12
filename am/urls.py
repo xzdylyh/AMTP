@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from amt import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^casemanage/$', views.case_manage_page),
+    url(r'^index/$', views.index),
     url(r'^iface/$',views.case_manage_iface),
     url(r'^scenario_manage/$',views.scenario_manage),
     url(r'^login_ajax/$',views.login_ajax),
     url(r'^$',views.login_ajax,name='login_ajax'),
+    url(r'^base_page/$',views.base_page),
+    url(r'^case_add_data/$',views.case_add_data),
+    url(r'^case_delete_data/$',views.case_delete_data),
+    url(r'^case_modify_data/$',views.case_modify_data),
+    url(r'^select_case_data/$',views.select_case_data),
 ]
