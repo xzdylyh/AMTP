@@ -32,13 +32,14 @@ def case_delete_data(request):
 #修改测试用例
 @csrf_exempt
 def case_modify_data(request):
+    exresult = request.POST.get('exresult')
     mcaseid  = request.POST.get('caseid')
     MdfData = case_interface_table.objects.get(id=mcaseid)
-    MdfData.ICaseURL = request.POST.get('eurl')
-    MdfData.ICaseDescription = request.POST.get('edesc')
-    MdfData.ICaseMethod = request.POST.get('emethod')
-    MdfData.ICase_Data = request.POST.get('edata')
-    MdfData.ICase_ExResult = request.POST.get('eresult')
+    MdfData.ICaseURL = request.POST.get('url')
+    MdfData.ICaseDescription = request.POST.get('desc')
+    MdfData.ICaseMethod = request.POST.get('method')
+    MdfData.ICase_Data = request.POST.get('data')
+    MdfData.ICase_ExResult = exresult
     MdfData.save()
     return HttpResponse(request,"ok")
 

@@ -7,7 +7,7 @@
 
 <!--add table to data -->
 <div>
-    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" name="addCase">
+    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
         <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span> 增加用例
     </button>
 </div>
@@ -43,7 +43,7 @@
                     </td>
                     <td>
 
-                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}')">
+                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
                             <span class="glyphicon glyphicon-wrench" style="color: rgb(100, 146, 191);">修改</span>
                         </button>
 
@@ -68,12 +68,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">增加测试用例</h4>
+                <h4 class="modal-title" id="modelTiele"></h4>
             </div>
             <div class="modal-body">
                 <div>
                     <form id="addcaseform" class="form form-horizontal" role="form" method="post">
-
+                        <input class="form-control" type="hidden" id="save_case_id"/>
                         <div class="input-group col-sm-6">
                             <span class="input-group-addon">url:</span>
                             <input class="form-control" name="eurl" id="eurl" type="text"/>
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="confirm_submit">提交更改</button>
+                <button type="button" class="btn btn-primary" id="confirm_submit" onclick="select_func()"></button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 
             </div>
@@ -130,6 +130,7 @@
 <script>
     //点击修改按钮进行，数据查询
     function select_data(caseid){
+        $("#save_case_id").val(caseid); //记录要修改的case id
         $.ajax({
                     url:'/select_case_data/',
                     type:'POST',
@@ -150,15 +151,76 @@
 
 
         });
-    }
+    };
+
+    //选择模态窗口，是新增，还是修改
+    function select_func(){
+        var confirmBtnVal=$("#confirm_submit").html();
+        if(confirmBtnVal=="确认新增"){
+            add_case_func();
+        }
+        if(confirmBtnVal=="确认修改"){
+            modify_case_func();
+        }
+    };
+
+    //确认修改按钮事件
+    function modify_case_func(){
+        //
+        if(confirm("确认要修改吗？")){
+            var flag =1;
+        }else{
+            var flag =0;
+        }
+        if(flag==1){
+            $.ajax({
+                url:'/case_modify_data/',
+                type:'post',
+                data:{
+                    'caseid':$("#save_case_id").val(),
+                    'url':$("#eurl").val(),
+                    'desc':$("#edesc").val(),
+                    'method':$("#emethod1").val(),
+                    'itype':$("#etype").val(),
+                    'data':$("#edata1").val(),
+                    'exresult':$("#eresult").val()
+                },
+                dataType:'text',
+                success:function(data){
+                    window.location.reload();
+                },
+                error:function(){
+                    alert('error');
+                }
+            });
+        }
+    };
 
 </script>
 
 
 <script>
+    //模态窗口标题及提交按钮
+    function changeId(btn){
+        if(btn=="add"){
+            $("#modelTiele").html("增加测试用例");
+            $("#confirm_submit").html("确认新增");
+            $("#eurl").val("");
+            $("#edesc").val("");
+            $("#edata1").val("");
+            $("#eresult").val("");
+        }
+        if(btn=="modify"){
+            $("#modelTiele").html("修改测试用例");
+            $("#confirm_submit").html("确认修改");
+        }
 
-    $("#confirm_submit").click(
-    function(){
+    };
+
+
+
+    //增加测试用例
+    function add_case_func(){
         //
         if(confirm("确认要新增吗？")){
             var flag =1;
@@ -189,7 +251,7 @@
         }else{
 
         }
-    });
+    };
 
 </script>
 
