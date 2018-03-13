@@ -29,7 +29,9 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">欢迎:{{curUser}}</a></li>
+                    {% if request.session.username %}
+                    <li><a href="#">欢迎:{{request.session.username}}</a></li>
+                    {% endif %}
                     <li><a href="#">注销</a></li>
                 </ul>
             </div>

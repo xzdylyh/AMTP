@@ -33,4 +33,12 @@ class run_interface_table(models.Model):
     IRunFiled4 = models.CharField(max_length=500)
     IRunFiled5 = models.CharField(max_length=500)
 
-#ui用例
+#用户表
+class User(models.Model):
+    user_id = models.AutoField #用户id
+    username = models.CharField(max_length=50) #用户名称
+    password = models.CharField(max_length=50) #密码
+    create_time = models.DateTimeField("创建日期",auto_now_add=True) #第一次创建时间，之后更新model不会更改
+    e_mail =models.CharField(max_length=150) #e-mail
+
+
