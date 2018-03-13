@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block title %}测试用例管理{% endblock %}
+{% block content %}
+<div>
+    <label><a href="#">>>用例管理>>接口测试用例管理</a></label>
+</div>
+
+<!--add table to data -->
+<div>
+    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" name="addCase"  onclick="delete_case('31')">
+        <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span> 增加用例
+    </button>
+    <button onclick="delete_case('31')">删除</button>
+</div>
+
+<!--views is case data -->
+<div>
+    <table  class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>接口描述</th>
+                 <th>接口地址</th>
+                 <th>方法</th>
+                 <th>数据</th>
+                 <th>预期</th>
+                 <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for case in posts %}
+                <tr>
+                    <td>
+                        <div class="MHover" title="{{case.ICaseDescription}}">{{case.ICaseDescription}}</div>
+                    </td>
+                    <td>
+                        <div class="MHover" title="{{case.ICaseURL}}">{{case.ICaseURL}}</div>
+                    </td>
+                    <td>{{case.ICaseMethod}}</td>
+                    <td>
+                        <div class="MHover" title="{{case.ICase_Data}}">{{case.ICase_Data}}</div>
+                    </td>
+                    <td>
+                        <div class="MHover" title="{{case.ICase_ExResult}}">{{case.ICase_ExResult}}</div>
+                    </td>
+                    <td>
+
+                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="ebtn{{case.id}}" name="dbtn" type="button" onclick="openLogin('{{case.ICaseURL}}','{{case.ICaseDescription}}','{{case.ICase_Data}}','{{case.ICase_ExResult}}','{{case.ICaseMethod}}','{{case.id}}')">
+                            <span class="glyphicon glyphicon-wrench" style="color: rgb(100, 146, 191);">修改</span>
+                        </button>
+
+                        <button class="btn btn-default btn-xs" id="{{case.id}}" name="deleteBtn" onclick="delete_case('{{case.id}}')">
+                            <span class="glyphicon glyphicon-remove" style="color: rgb(214, 84, 63);">删除</span>
+                        </button>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<ul class="pagination pagination-sm">
+    {{fpageCount|safe}}
+</ul>
+
+<!--模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><a href="#">>>接口测试用例管理>>编辑测试用例</a></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="form-horizontal" role="form" method="POST" onsubmit="alert('提示消息:修改完成.')">
+                        <div class="form-group">
+                            <input name="mcaseid" id="mcaseid" type="hidden">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">url:</span>
+                            <input class="form-control" name="eurl" id="eurl" type="text"/>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">描述:</span>
+                            <input class="form-control" name="edesc" id="edesc" type="text"/>
+                        </div>
+                        <br>
+                        <div class="input-group" style="padding: 1px 1px 10px;">
+                            <span class="input-group-addon">方法:</span>
+                            <select class="form-control" name="emethod" id="emethod1">
+                                <option value="0">POST</option>
+                                <option value="1">GET</option>
+                            </select>
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon">类型:</span>
+                                    <select class="form-control" name="etype" id="etype">
+                                        <option value="0">HTTP</option>
+                                        <option value="1">WebService</option>
+                                    </select>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="data">数据:</label>
+                                <textarea name="edata" id="edata1" class="dataarea"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exresult">预期:</label>
+                                <textarea name="eresult" id="eresult" class="dataarea"></textarea>
+                            </div>
+
+                            <div class="btn btn-default">
+                                <button name="confirmCase" type="submit">
+                                    <span class="glyphicon glyphicon-ok" style="color: rgb(42, 168, 63);"></span>确认修改
+                                </button>
+                            </div>
+                            <div class="btn btn-default">
+                                <button data-dismiss="modal" name="close" type="button"  onclick="closeLogin()">
+                                    <span class="glyphicon glyphicon-remove"></span> 取消
+                                </button>
+                            </div>
+                            {%csrf_token%}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+        function delete_case(caseid){
+            //删除确认对话框
+            if(confirm("确认删除吗?"))
+            {
+                var flag = 1;
+            }else{
+                var flag = 0;
+            }
+
+            //ajax将caseid传到后台，执行删除，并返回数据。
+            if(flag==1)
+            {
+                $.ajax({
+                    url:'/case_delete_data/',
+                    type:'POST',
+                    data:{"caseid":caseid},
+                    dataType:'JSON',
+
+                    success:function(data){
+                        alert("success_ajax");
+                        $("body").html(data);
+
+                    }
+
+                });
+            }else{
+
+            }
+        }
+
+    </script>
+    <!--script>
+        function ajax_btn(){
+            $.ajax({
+                url:'/ajax_test/',
+                type:'POST',
+                data:{"code":"203"},
+                dataType:'JSON',
+
+                success:function(data){
+                    alert("success_ajax");
+                }
+
+            });
+        }
+    </script-->
+{% endblock %}
