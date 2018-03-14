@@ -109,9 +109,9 @@ def login_validation(request):
         if uname==user.username and password==user.password:
             request.session['username']=uname
             request.session.set_expiry(600) #session过期时间
-            return render(request,'index.html')
+        return JsonResponse({'res':1}) #1验证成功
     except Exception as ex:
-        return JsonResponse({'res':'用记名或密码错误'})
+        return JsonResponse({'res':0}) #0验证失败
 
 #用户注册
 def register(request):
