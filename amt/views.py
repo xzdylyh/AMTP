@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from models import case_interface_table,run_interface_table,User
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render,render_to_response,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
@@ -113,6 +113,25 @@ def login_validation(request):
     except Exception as ex:
         return JsonResponse({'res':'用记名或密码错误'})
 
+#用户注册
+def register(request):
+    return render(request,"register.html")
+
+@csrf_exempt
+def user_register(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    email=request.POST.get('email')
+    data ={
+        username,
+        password,
+        email
+    }
+    try:
+        User.objects.create(**data)
+        return HttpResponseRedirect("/login_ajax/")
+    except Exception as Ex:
+        return JsonResponse({"res":"用户注册失败，请与管理员联系"})
 
 #基础页
 def base_page(request):

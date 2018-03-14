@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^scenario_manage/$',views.scenario_manage),
     url(r'^login_ajax/$',views.login_ajax),
     url(r'^login_validation/$',views.login_validation),
+    url(r'^register/$',views.register),
+    url(r'^user_register/$',views.user_register),
     url(r'^$',views.login_ajax,name='login_ajax'),
     url(r'^base_page/$',views.base_page),
     url(r'^case_add_data/$',views.case_add_data),
