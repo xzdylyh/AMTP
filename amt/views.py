@@ -119,19 +119,29 @@ def register(request):
 
 @csrf_exempt
 def user_register(request):
-    username = request.POST.get('username')
+    uname = request.POST.get('username')
     password = request.POST.get('password')
     email=request.POST.get('email')
-    data ={
-        username,
-        password,
-        email
-    }
     try:
-        User.objects.create(**data)
-        return HttpResponseRedirect("/login_ajax/")
+        user = User.objects.get(username=uname)
+        tmp = "yes" #已被注册
     except Exception as Ex:
-        return JsonResponse({"res":"用户注册失败，请与管理员联系"})
+        tmp = "not"
+
+    if tmp =='not':
+        data ={
+            'username':uname,
+            'password':password,
+            'e_mail':email
+        }
+
+        User.objects.create(**data)
+        return JsonResponse({"res":1}) #1注册成功
+    else:
+
+        return JsonResponse({"res":0}) #0用户名已被注册
+
+
 
 #基础页
 def base_page(request):
