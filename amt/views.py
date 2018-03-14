@@ -98,6 +98,10 @@ def  scenario_manage(request):
 def login_ajax(request):
     return render(request,"login.html")
 
+#注销登录
+def logout(request):
+    del request.session['username']
+    return HttpResponseRedirect('/')
 
 @csrf_exempt
 def login_validation(request):
