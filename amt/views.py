@@ -166,6 +166,10 @@ def user_register(request):
         return JsonResponse({"res":0}) #0用户名已被注册
 
 
+#系统设置
+@login_limit
+def system(request):
+    return render(request,"system.html")
 
 #基础页
 def base_page(request):

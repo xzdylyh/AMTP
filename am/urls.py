@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^case_delete_data/$',views.case_delete_data),
     url(r'^case_modify_data/$',views.case_modify_data),
     url(r'^select_case_data/$',views.select_case_data),
+    url(r'^system/$',views.system),
 ]

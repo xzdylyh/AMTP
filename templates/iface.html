@@ -11,8 +11,8 @@
         <div class="row">
             <div class="col-lg-6 pull-left">
                 <div class="input-group">
-                    <button class="btn btn-default btn-xs form-control" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
-                        <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span>增加用例
+                    <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
+                        <span class="glyphicon glyphicon-plus" style="color: rgb(255, 255, 255);"></span>增加用例
                     </button>
                 </div>
             </div>
@@ -32,9 +32,9 @@
 
 <!--views is case data -->
 <div>
-    <table  class="table  table-hover table-condensed table-bordered" id="case_table">
+    <table  class="table table-bordered table-condensed table-hover">
         <thead>
-            <tr class="info">
+            <tr class="active">
                 <th>接口描述</th>
                  <th>接口地址</th>
                  <th>方法</th>
@@ -61,12 +61,12 @@
                     </td>
                     <td>
 
-                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
-                            <span class="glyphicon glyphicon-wrench" style="color: rgb(100, 146, 191);">修改</span>
+                        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
+                            <span class="glyphicon glyphicon-wrench" style="color: rgb(255, 255, 255);">修改</span>
                         </button>
 
-                        <button class="btn btn-default btn-xs" id="{{case.id}}" name="deleteBtn" onclick="delete_case('{{case.id}}')">
-                            <span class="glyphicon glyphicon-remove" style="color: rgb(214, 84, 63);">删除</span>
+                        <button class="btn btn-danger btn-xs" id="{{case.id}}" name="deleteBtn" onclick="delete_case('{{case.id}}')">
+                            <span class="glyphicon glyphicon-remove" style="color: rgb(255, 255, 255);">删除</span>
                         </button>
 
                     </td>

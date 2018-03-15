@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}测试用例管理{% endblock %}
+{% block content %}
+   <div class="container">
+        <div class="form row">
+            <div class="form-horizontal col-md-offset-3" id="login_form">
+                <h3 class="form-title">自动接收测试报告</h3>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <i class="fa fa-envelope-o fa-lg"></i>
+                        <input class="form-control required" type="text" placeholder="EMAIL" id="username" name="username" autofocus="autofocus" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                            <i class="fa fa-lock fa-lg"></i>
+                            <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                            <i class="fa fa-envelope-o fa-lg"></i>
+                            <input class="form-control required" type="text" placeholder="E-mail" id="email" name="email" maxlength="32"/>
+
+                    </div>
+                    <div class="form-group col-md-offset-9">
+                        <button  type="button" class="btn btn-success pull-right" id="submit">保存设置</button>
+                    </div>
+                    <div class="form-group col-md-offset-12">
+                        <i class="fa fa-exclamation-triangle fa-lg" id="display_text"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#submit").click(function(){
+            if($("#username").val()!="" && $("#password").val()!="" && $("#email").val()!="")
+            {
+                if(username_validate($("#username").val()) && email_validate($("#email").val()))
+                {
+                    $.ajax({
+                        url:'/user_register/',
+                        type:'post',
+                        data:{
+                            'username':$("#username").val(),
+                            'password':$("#password").val(),
+                            'email':$("#email").val()
+                        },
+                        dataType:'json',
+                        success:function(args){
+                            if(args.res==1){
+                                $("#display_text").html("注册成功;3秒后自动跳转到登录界面");
+                                setTimeout(function(){
+                                    window.location ="/";
+                                },3000);
+
+                            }else{
+                                $("#display_text").html("用户名已被注册.");
+                            };
+                        },
+                        error:function(data){
+                            alert('error');
+                        }
+                    });
+                }
+            }
+            else
+            {
+                alert("用户名、密码、EMail 不能为空。");
+            }
+        });
+
+
+        //验证用户名
+        function username_validate(username){
+            var uname = /[a-zA-Z0-9]{4,20}/.test(username);
+            if(!uname){
+                $("#display_text").html("用户名不符合规则,应为4位以上，20位以下的字符或数字");
+                return false;
+            }else{
+                return true;
+            }
+        };
+
+        //验证邮箱
+        function email_validate(email){
+            var email_str =/^([a-zA-Z0-9_\.\-])+\@([a-zA-Z0-9])+(\.([a-zA-Z]{2,3}))+$/.test(email);
+            if(!email_str){
+                $("#display_text").html("邮件地址不符合规则,示例:email@163.com");
+                return false;
+            }else{
+                return true;
+            }
+        };
+    </script>
+
+{% endblock %}
