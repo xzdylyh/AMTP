@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from models import case_interface_table,run_interface_table,User
-from django.shortcuts import render,render_to_response,HttpResponseRedirect
+from django.shortcuts import render,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
 
+#自开发的包
+from models import case_interface_table,run_interface_table,User
 from pager import pageInfo
 from modelHelp import ModelClass
-
+from decorator import login_limit
 # Create your views here.
+
+
+@login_limit
 def index(request):
     return render(request,"index.html")
 
 
 #删除测试用例
+@login_limit
 @csrf_exempt
 def case_delete_data(request):
     case_id = int(request.POST.get('caseid'))
@@ -30,6 +35,7 @@ def case_delete_data(request):
     return HttpResponse(request,"OK")
 
 #修改测试用例
+@login_limit
 @csrf_exempt
 def case_modify_data(request):
     exresult = request.POST.get('exresult')
@@ -44,6 +50,7 @@ def case_modify_data(request):
     return HttpResponse(request,"ok")
 
 #增加一条测试用例
+@login_limit
 @csrf_exempt
 def case_add_data(request):
     insertData = {
@@ -63,6 +70,7 @@ def case_add_data(request):
     return HttpResponse(request,"ok")
 
 #查询单条数据
+@login_limit
 @csrf_exempt
 def select_case_data(request):
     caseid = request.POST.get('caseid')
@@ -74,6 +82,7 @@ def select_case_data(request):
 
 
 #查询测试用例
+@login_limit
 def case_manage_iface(request):
     '''
     #分页代码
@@ -90,15 +99,19 @@ def case_manage_iface(request):
     return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount,})
 
 
-
+@login_limit
+@csrf_exempt
 def  scenario_manage(request):
     pass
+
 
 #登录页
 def login_ajax(request):
     return render(request,"login.html")
 
+
 #注销登录
+@login_limit
 def logout(request):
     del request.session['username']
     return HttpResponseRedirect('/')
@@ -152,6 +165,7 @@ def user_register(request):
 #基础页
 def base_page(request):
     return render(request,"base.html")
+
 
 
 

@@ -128,3 +128,4 @@ STATICFILES_DIRS=(
     ("images",os.path.join(STATIC_DIR,'images')),
 )
 STATIC_URL = '/static/'
+LOGIN_URL = '/login/'
