@@ -130,7 +130,7 @@ def login_validation(request):
         user = User.objects.get(username=uname)
         if uname==user.username and password==user.password:
             request.session['username']=uname
-            request.session.set_expiry(600) #session过期时间
+            request.session.set_expiry(0) #session过期时间 0用户关闭浏览器，即失效
             return JsonResponse({'res':1}) #1验证成功
         else:
             return JsonResponse({'res':0}) #0验证失败
