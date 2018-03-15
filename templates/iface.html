@@ -250,26 +250,30 @@
             var flag =0;
         }
         if(flag==1){
-            $.ajax({
-                url:'/case_add_data/',
-                type:'post',
-                dataType:'text',
-                data:{
-                'idesc':$("#edesc").val(),
-                'iurl':$("#eurl").val(),
-                'imethod':$("#emethod1").val(),
-                'idata':$("#edata1").val(),
-                'iresult':$("#eresult").val()
-                },
-                error:function(data){
-                    alert("ajax error");
-                },
-                success:function(data){
-                    window.location.reload();
-                }
+            if($("#eurl").val()!="" && $("#edesc").val()!="" && $("#edata1").val()!="" && $("#eresult").val()!="")
+            {
+                $.ajax({
+                    url:'/case_add_data/',
+                    type:'post',
+                    dataType:'text',
+                    data:{
+                    'idesc':$("#edesc").val(),
+                    'iurl':$("#eurl").val(),
+                    'imethod':$("#emethod1").val(),
+                    'idata':$("#edata1").val(),
+                    'iresult':$("#eresult").val()
+                    },
+                    error:function(data){
+                        alert("ajax error");
+                    },
+                    success:function(data){
+                        window.location.reload();
+                    }
 
-            });
-
+                });
+            }else{
+                alert("字段不能为空。");
+            }
         }else{
 
         }
