@@ -43,9 +43,13 @@ class pageInfo(object):
         else:
             upPage ='<li><a href="#">&laquo;</a></li>'
 
+        #首页
+        firstPage = '<li><a href="/iface?page=1">首页</a></li>'
+
         #将页数描述文本显示到最前边
         tmplist =[]
         tmplist.append(descPage)
+        tmplist.append(firstPage)
         tmplist.append(upPage)
 
 
@@ -62,6 +66,9 @@ class pageInfo(object):
             downPage ='<li><a href="/iface?page=%d">&raquo;</a></li>'%(self.curpage+1,)
         else:
             downPage ='<li><a href="#">&raquo;</a></li>'
-        tmplist.append(downPage)
 
+        #尾页
+        lastPage = '<li><a href="/iface?page=%d">尾页</a></li>'%(page,)
+        tmplist.append(downPage)
+        tmplist.append(lastPage)
         return ''.join(tmplist)

@@ -19,7 +19,6 @@ def index(request):
 
 
 #删除测试用例
-@login_limit
 @csrf_exempt
 def case_delete_data(request):
     case_id = int(request.POST.get('caseid'))
@@ -35,7 +34,7 @@ def case_delete_data(request):
     return HttpResponse(request,"OK")
 
 #修改测试用例
-@login_limit
+
 @csrf_exempt
 def case_modify_data(request):
     exresult = request.POST.get('exresult')
@@ -50,7 +49,7 @@ def case_modify_data(request):
     return HttpResponse(request,"ok")
 
 #增加一条测试用例
-@login_limit
+
 @csrf_exempt
 def case_add_data(request):
     insertData = {
@@ -70,7 +69,6 @@ def case_add_data(request):
     return HttpResponse(request,"ok")
 
 #查询单条数据
-@login_limit
 @csrf_exempt
 def select_case_data(request):
     caseid = request.POST.get('caseid')
@@ -82,7 +80,6 @@ def select_case_data(request):
 
 
 #查询测试用例
-@login_limit
 def case_manage_iface(request):
     '''
     #分页代码
