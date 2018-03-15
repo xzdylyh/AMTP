@@ -92,14 +92,15 @@ def case_manage_iface(request):
     '''
     curPage = int(request.GET.get('page','1'))
     allCount = case_interface_table.objects.all().count()
-    fpage = pageInfo(curPage,allCount,5)
+    fpage = pageInfo(curPage,allCount,10)
     fpageCount = fpage.pager()
+
 
     #数据操作类
     model_class = ModelClass(case_interface_table)
     posts = model_class.getDataAll(fpage) #获取所有数据，根据分页获取
 
-    return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount,})
+    return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount['page_info'],"fpageDesc":fpageCount['page_desc'],})
 
 
 

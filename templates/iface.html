@@ -7,16 +7,34 @@
 
 <!--add table to data -->
 <div>
-    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
-        <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span> 增加用例
-    </button>
+    <div class="bs-example bs-example-form" role="form">
+        <div class="row">
+            <div class="col-lg-6 pull-left">
+                <div class="input-group">
+                    <button class="btn btn-default btn-xs form-control" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
+                        <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span>增加用例
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-3 pull-right">
+                <div class="input-group">
+                    <input type="text" id="search_input" class="form-control" placeholder="根据描述搜索"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="search_btn">搜索</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!--views is case data -->
 <div>
     <table  class="table  table-hover table-condensed table-bordered" id="case_table">
         <thead>
-            <tr class="active">
+            <tr class="info">
                 <th>接口描述</th>
                  <th>接口地址</th>
                  <th>方法</th>
@@ -58,7 +76,11 @@
     </table>
 </div>
 
-<ul class="pagination pagination-sm">
+<ul class="pagination pagination-sm pull-left">
+    {{fpageDesc|safe}}
+</ul>
+
+<ul class="pagination pagination-sm pull-right">
     {{fpageCount|safe}}
 </ul>
 
