@@ -20,6 +20,7 @@ def index(request):
 
 #删除测试用例
 @csrf_exempt
+@login_limit
 def case_delete_data(request):
     case_id = int(request.POST.get('caseid'))
     model_class = ModelClass(case_interface_table)
@@ -36,6 +37,7 @@ def case_delete_data(request):
 #修改测试用例
 
 @csrf_exempt
+@login_limit
 def case_modify_data(request):
     exresult = request.POST.get('exresult')
     mcaseid  = request.POST.get('caseid')
@@ -51,6 +53,7 @@ def case_modify_data(request):
 #增加一条测试用例
 
 @csrf_exempt
+@login_limit
 def case_add_data(request):
     insertData = {
                 "ICaseDescription":request.POST.get('idesc'),
@@ -70,6 +73,7 @@ def case_add_data(request):
 
 #查询单条数据
 @csrf_exempt
+@login_limit
 def select_case_data(request):
     caseid = request.POST.get('caseid')
     #数据操作类
@@ -80,6 +84,8 @@ def select_case_data(request):
 
 
 #查询测试用例
+@csrf_exempt
+@login_limit
 def case_manage_iface(request):
     '''
     #分页代码
@@ -96,8 +102,9 @@ def case_manage_iface(request):
     return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount,})
 
 
-@login_limit
+
 @csrf_exempt
+@login_limit
 def  scenario_manage(request):
     pass
 
