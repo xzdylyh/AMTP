@@ -40,5 +40,10 @@ class User(models.Model):
     password = models.CharField(max_length=50) #密码
     create_time = models.DateTimeField("创建日期",auto_now_add=True) #第一次创建时间，之后更新model不会更改
     e_mail =models.CharField(max_length=150) #e-mail
+    #status = models.ManyToManyField('User_Status',null=True)
 
-
+'''
+#用户状态表
+class User_Status(models.Model):
+    status = models.CharField(max_length=20)
+'''
