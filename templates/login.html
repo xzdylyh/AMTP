@@ -19,8 +19,9 @@
     </style>
     <script>
         $(document).ready(function(){
-            if($.cookie('remember')=='true'){
-                $("#remember").porp("checked",true);
+            var rem = $.cookie('remember');
+            if(rem){
+                $("#remember").prop("checked",true);
                 $("#username").val($.cookie("username"));
                 $("#password").val($.cookie("password"));
             }
@@ -94,11 +95,11 @@
                 var username = $("#username").val();
                 var password = $("#password").val();
 
-                $.cookie("remember","true",{ expires:7});
-                $.cookie("username",username,{ expires:7 });
-                $.cookie("password",password,{ expires:7 });
+                $.cookie("remember","true",{expires:7});
+                $.cookie("username",username,{expires:7 });
+                $.cookie("password",password,{expires:7 });
             }else{
-                $.cookie("remember","false",{ expires:-1});
+                $.cookie("remember","false",{expires:-1});
                 $.cookie("username","",{ expires:-1 });
                 $.cookie("password","",{ expires:-1 });
             }
