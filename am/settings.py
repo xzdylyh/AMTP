@@ -26,7 +26,8 @@ SECRET_KEY = '%_3r6+uw%=e8baaw@cjqojblg25%rdn9lb^%1svg^r47y35#2i'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+DEFAULT_CHARSET = 'utf-8'
+FILE_CHARSET = 'utf-8'
 
 # Application definition
 

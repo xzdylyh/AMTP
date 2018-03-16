@@ -61,7 +61,9 @@ def case_add_data(request):
                 "IcaseFiled4":"",
                 "IcaseFiled5":""
             }
+
     case_interface_table.objects.create(**insertData)
+
     return HttpResponse(request,"ok")
 
 #查询单条数据

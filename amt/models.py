@@ -10,8 +10,8 @@ class case_interface_table(models.Model):
     ICaseDescription = models.CharField(max_length=150) #描述
     ICaseURL = models.CharField(max_length=150) #url
     ICaseMethod = models.CharField(max_length=150) #post or get
-    ICase_Data = models.CharField(max_length=20000) #data=dict{}
-    ICase_ExResult = models.CharField(max_length=20000) #ExResult
+    ICase_Data = models.TextField() #data=dict{}
+    ICase_ExResult = models.TextField() #ExResult
     Icase_CreateUser = models.CharField(max_length=150) #Case Create User
     IcaseFiled1 = models.CharField(max_length=500)
     IcaseFiled2 = models.CharField(max_length=500)
