@@ -1,14 +1,14 @@
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
    <meta charset="UTF-8">
     <title>login-AM</title>
-
-    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <link href="/static/css/bootstrap3.3.7.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <script src="/static/js/bootstrap3.3.7.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
     <style>
 
         .form{background: rgba(255,255,255,0.2);width:400px;margin:120px auto;}
@@ -17,7 +17,15 @@
         input[type="text"],input[type="password"]{padding-left:26px;}
         .checkbox{padding-left:21px;}
     </style>
-
+    <script>
+        $(document).ready(function(){
+            if($.cookie('remember')=='true'){
+                $("#remember").porp("checked",true);
+                $("#username").val($.cookie("username"));
+                $("#password").val($.cookie("password"));
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -35,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <label class="checkbox">
-                            <input type="checkbox" name="remember" value="1"/>记住我
+                            <input type="checkbox" id="remember" value="1" />记住我
                         </label>
 
                     </div>
@@ -51,9 +59,11 @@
         </div>
     </div>
     <script>
+
         $("#submit").click(function(){
             if($("#username").val()!="" && $("#password").val()!="")
             {
+                save_cookies();
                 $.ajax({
                     url:'/login_validation/',
                     type:'post',
@@ -78,8 +88,25 @@
             }
         });
 
+     //保存到cookie
+        function save_cookies(){
+            if($("#remember").prop("checked")){
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                $.cookie("remember","true",{ expires:7});
+                $.cookie("username",username,{ expires:7 });
+                $.cookie("password",password,{ expires:7 });
+            }else{
+                $.cookie("remember","false",{ expires:-1});
+                $.cookie("username","",{ expires:-1 });
+                $.cookie("password","",{ expires:-1 });
+            }
+        };
+
 
     </script>
+
 
 </body>
 </html>

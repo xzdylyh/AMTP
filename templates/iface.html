@@ -35,6 +35,7 @@
     <table  class="table table-bordered table-condensed table-hover">
         <thead>
             <tr class="active">
+                <th>序号</th>
                 <th>接口描述</th>
                  <th>接口地址</th>
                  <th>方法</th>
@@ -45,7 +46,9 @@
         </thead>
         <tbody>
             {% for case in posts %}
+
                 <tr>
+                    <td class="active" style="width:39px">{{forloop.counter}}</td>
                     <td>
                         <div class="MHover" title="{{case.ICaseDescription}}">{{case.ICaseDescription}}</div>
                     </td>
