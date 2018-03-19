@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^case_modify_data/$',views_case.case_modify_data),
     url(r'^select_case_data/$',views_case.select_case_data),
     url(r'^iface/$',views_case.case_manage_iface),
+    url(r'^select_all_ajax/$',views_case.select_all_ajax),
     url(r'^scenario_manage/$',views.scenario_manage),
 
     url(r'^system/$',views.system),

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}测试运行{% endblock %}
+{% load staticfiles %}
 {% block content %}
 <div>
     <div class="row">
@@ -12,8 +13,8 @@
         <div class="col-lg-10">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <button class="btn btn-success btn-xs">
-                        <span class="glyphicon glyphicon-plus" style="color: rgb(255, 255, 255);">添加</span>
+                    <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" onclick="select_case()">
+                        <span class="glyphicon glyphicon-plus " style="color: rgb(255, 255, 255);">添加</span>
                     </button>
                     <button class="btn btn-danger btn-xs">
                         <span class="glyphicon glyphicon-remove" style="color: rgb(255, 255, 255);">删除</span>
@@ -47,16 +48,94 @@
                         <th style="width:39px">选择</th>
                         <th>对象</th>
                         <th>状态</th>
-                        <th>时间</th>
+                        <th>上次执行时间</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    {% for case in posts %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    <div class="row">
+       <div class="col-lg-10">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">选择执行对象</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr class="active">
+                                        <th style="width:39px;">序号</th>
+                                        <th style="width:39px;">选择</th>
+                                        <th>测试对象</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tr_test_data">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left">全选</button>
+                            <button type="button" class="btn btn-default pull-left">取消全选</button>
+                            <button type="button" class="btn btn-primary">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 </div>
 
+<script>
+
+    function td(content){
+        return "<td>"+content+"</td>"
+    };
+    function tr(content){
+        return "<tr>"+content+"</tr>"
+    };
+
+    function select_case(){
+        $.ajax({
+            url:'/select_all_ajax/',
+            type:'get',
+            dataType:'json',
+            success:function(args){
+                var k = 1
+                for(var key in args){
+                    //alert(args[key].ICaseDescription);
+                    var td_str = td_str + td(k);
+                    td_str = td_str + td('<input type="checkbox" id="'+args[key].id+'">');
+                    td_str = td_str + td(args[key].ICaseDescription);
+                    k+=1;
+                    var tmp = tmp + tr(td_str);
+                    td_str = "";
+                };
+                $("#tr_test_data").html(tmp);
+
+            },
+            error:function(){
+                alert('ajax_error.');
+            }
+
+        });
+    };
+</script>
 
 {% endblock %}

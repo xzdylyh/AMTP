@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
+import json
 
 #自开发的包
 from models import case_interface_table
@@ -78,7 +79,7 @@ def select_case_data(request):
     return JsonResponse(data_dict)
 
 
-#查询测试用例
+#查询测试用例-带分页
 @csrf_exempt
 @login_limit
 def case_manage_iface(request):
@@ -96,3 +97,19 @@ def case_manage_iface(request):
     posts = model_class.getDataAll(fpage) #获取所有数据，根据分页获取
 
     return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount['page_info'],"fpageDesc":fpageCount['page_desc'],})
+
+#查询所有case数据
+@csrf_exempt
+@login_limit
+def select_all_ajax(request):
+    datadict={}
+
+    alldata = case_interface_table.objects.all()
+    k=0
+    for i in alldata:
+        datadict[k]= model_to_dict(i)
+        k+=1
+
+    js = json.dumps(datadict)
+
+    return HttpResponse(js,content_type="application/json")
