@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}测试运行{% endblock %}
+{% block content %}
+<div>
+    <div class="row">
+        <div class="col-lg-6">
+            <label><a href="/run_test/">>>当前位置：测试执行</a></label>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <button class="btn btn-success btn-xs">
+                        <span class="glyphicon glyphicon-plus" style="color: rgb(255, 255, 255);">添加</span>
+                    </button>
+                    <button class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-remove" style="color: rgb(255, 255, 255);">删除</span>
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info btn-xs">
+                        <span class="glyphicon glyphicon-align-justify" style="color: rgb(255, 255, 255);"></span> 全选
+                    </button>
+                    <button class="btn btn-warning btn-xs">
+                        <span class="glyphicon glyphicon-list" style="color: rgb(255, 255, 255);"></span> 取消
+                    </button>
+                </div>
+                <div class="btn-group pull-right">
+                    <button class="btn btn-success btn-xs">
+                        <span class="glyphicon glyphicon-play" style="color: rgb(255, 255, 255);"></span> 开始执行
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <table class="table table-bordered table-condensed table-hover">
+                <caption></caption>
+                <thead>
+                    <tr class="active">
+                        <th style="width:39px">序号</th>
+                        <th style="width:39px">选择</th>
+                        <th>对象</th>
+                        <th>状态</th>
+                        <th>时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

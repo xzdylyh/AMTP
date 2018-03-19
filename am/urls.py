@@ -19,6 +19,7 @@ from amt import views
 from amt import views_user
 from amt import views_login
 from amt import views_case
+from amt import views_run
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -43,4 +44,6 @@ urlpatterns = [
     url(r'^scenario_manage/$',views.scenario_manage),
 
     url(r'^system/$',views.system),
+
+    url(r'^run_test/$',views_run.run_test),
 ]
