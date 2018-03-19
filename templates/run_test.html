@@ -84,16 +84,14 @@
                                         <th>测试对象</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tr_test_data">
-
-                                </tbody>
+                                <tbody id="tr_test_data"></tbody>
                             </table>
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left">全选</button>
-                            <button type="button" class="btn btn-default pull-left">取消全选</button>
-                            <button type="button" class="btn btn-primary">确认</button>
+                            <button type="button" class="btn btn-default pull-left">取消选择</button>
+                            <button type="button" class="btn btn-primary">确认选择</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal -->
@@ -104,6 +102,7 @@
 
 <script>
 
+
     function td(content){
         return "<td>"+content+"</td>"
     };
@@ -111,6 +110,7 @@
         return "<tr>"+content+"</tr>"
     };
 
+    //获取数据
     function select_case(){
         $.ajax({
             url:'/select_all_ajax/',
