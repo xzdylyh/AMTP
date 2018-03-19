@@ -113,3 +113,5 @@ def select_all_ajax(request):
     js = json.dumps(datadict)
 
     return HttpResponse(js,content_type="application/json")
+
+

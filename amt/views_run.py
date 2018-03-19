@@ -6,7 +6,7 @@ from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
 
 #自开发的包
-from models import case_interface_table
+from models import run_interface_table,case_interface_table
 from pager import pageInfo
 from modelHelp import ModelClass
 from decorator import login_limit
@@ -14,4 +14,29 @@ from decorator import login_limit
 
 @login_limit
 def run_test(request):
-    return  render(request,"run_test.html")
+    posts = run_interface_table.objects.all()
+    return  render(request,"run_test.html",{"posts":posts,})
+
+@csrf_exempt
+@login_limit
+def insert_data(request):
+    for i in range(10000):
+        try:
+            caseid = request.POST.get('caseid%d'%(i))
+            case_table =case_interface_table.objects.get(id=caseid)
+            indata = {
+                "ICaseNo":caseid,
+                "IRunResult":"",
+                "IRunUser":request.session['username'],
+                "IRunReportName":"",
+                "IRunFiled1":case_table.ICaseDescription,
+                "IRunFiled2":"",
+                "IRunFiled3":"",
+                "IRunFiled4":"",
+                "IRunFiled5":""
+            }
+            run_interface_table.objects.create(**indata)
+        except Exception as Ex:
+            pass
+
+    return JsonResponse({'res':1})

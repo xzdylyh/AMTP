@@ -55,10 +55,11 @@
                     {% for case in posts %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><input type="checkbox" name="chk_name"></td>
+                            <td>{{case.IRunFiled1}}</td>
+                            <td>{{case.IRunResult}}</td>
+                            <td>{{case.IRunDateTime}}</td>
+
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -89,9 +90,9 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left">全选</button>
-                            <button type="button" class="btn btn-default pull-left">取消选择</button>
-                            <button type="button" class="btn btn-primary">确认选择</button>
+                            <button type="button" class="btn btn-default pull-left" id="all_select">全选</button>
+                            <button type="button" class="btn btn-default pull-left" id="cancel_select">取消选择</button>
+                            <button type="button" class="btn btn-primary" id="confirm_select_btn">确认选择</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal -->
@@ -101,7 +102,49 @@
 </div>
 
 <script>
+    //确认选择绑定
+    $("#confirm_select_btn").click(function(){
+        //获取选择项
+        var dict = {};
+        var i=0
+        $("input[name='ckb']").each(function(){
+            if($(this).is(":checked")){
+                dict['caseid'+i]=$(this).prop('id')
+            }
+            i+=1;
+        });
 
+        //ajax
+        $.ajax({
+            url:'/insert_data/',
+            type:'post',
+            data:dict,
+            dataType:'json',
+            success:function(args){
+                alert("ok");
+            },
+            error:function(){
+                alert("ajax_error.");
+            }
+        });
+
+    });
+</script>
+
+<script>
+    //全选
+    $("#all_select").click(function(){
+        $("input[name='ckb']").each(function(){
+            $(this).prop("checked",true);
+        });
+
+    });
+    //取消选择
+    $("#cancel_select").click(function(){
+        $("input[name='ckb']").each(function(){
+            $(this).prop("checked",false)
+        });
+    });
 
     function td(content){
         return "<td>"+content+"</td>"
@@ -121,7 +164,7 @@
                 for(var key in args){
                     //alert(args[key].ICaseDescription);
                     var td_str = td_str + td(k);
-                    td_str = td_str + td('<input type="checkbox" id="'+args[key].id+'">');
+                    td_str = td_str + td('<input type="checkbox" name="ckb" id="'+args[key].id+'">');
                     td_str = td_str + td(args[key].ICaseDescription);
                     k+=1;
                     var tmp = tmp + tr(td_str);

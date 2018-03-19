@@ -22,12 +22,12 @@ class case_interface_table(models.Model):
 #接口执行表
 class run_interface_table(models.Model):
     IRunNo = models.AutoField #执行编号
-    ICaseNo = models.IntegerField #用例编号
-    IRunDateTime = models.DateTimeField() #执行日期时间
+    ICaseNo = models.IntegerField() #用例编号
+    IRunDateTime = models.DateTimeField(auto_now=True) #执行日期时间
     IRunResult = models.CharField(max_length=150) #执行结果
     IRunUser = models.CharField(max_length=150) #执行用户
     IRunReportName = models.CharField(max_length=150) #执行报告名称
-    IRunFiled1 = models.CharField(max_length=500) #备用字段1
+    IRunFiled1 = models.CharField(max_length=500) #描述
     IRunFiled2 = models.CharField(max_length=500)
     IRunFiled3 = models.CharField(max_length=500)
     IRunFiled4 = models.CharField(max_length=500)

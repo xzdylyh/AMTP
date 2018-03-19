@@ -47,4 +47,5 @@ urlpatterns = [
     url(r'^system/$',views.system),
 
     url(r'^run_test/$',views_run.run_test),
+    url(r'^insert_data/$',views_run.insert_data),
 ]
