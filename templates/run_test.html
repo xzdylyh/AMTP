@@ -21,10 +21,10 @@
                     </button>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-info btn-xs">
+                    <button class="btn btn-info btn-xs" onclick="all_select_checkbox(1)">
                         <span class="glyphicon glyphicon-align-justify" style="color: rgb(255, 255, 255);"></span> 全选
                     </button>
-                    <button class="btn btn-warning btn-xs">
+                    <button class="btn btn-warning btn-xs" onclick="all_select_checkbox(0)">
                         <span class="glyphicon glyphicon-list" style="color: rgb(255, 255, 255);"></span> 取消
                     </button>
                 </div>
@@ -38,10 +38,12 @@
         </div>
 
     </div>
+    <br/>
     <div class="row">
         <div class="col-lg-10">
-            <table class="table table-bordered table-condensed table-hover">
-                <caption></caption>
+            <div style="overflow:scroll;">
+            <table class="table table-bordered table-condensed table-hover" style="min-height:800px;">
+
                 <thead>
                     <tr class="active">
                         <th style="width:39px">序号</th>
@@ -64,6 +66,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -77,17 +80,18 @@
                             <h4 class="modal-title" id="myModalLabel">选择执行对象</h4>
                         </div>
                         <div class="modal-body">
-                            <table class="table table-bordered table-condensed table-hover">
-                                <thead>
-                                    <tr class="active">
-                                        <th style="width:39px;">序号</th>
-                                        <th style="width:39px;">选择</th>
-                                        <th>测试对象</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tr_test_data"></tbody>
-                            </table>
-
+                            <div style="overflow:scroll;">
+                                <table class="table table-bordered table-condensed table-hover" style="min-height:200px;">
+                                    <thead>
+                                        <tr class="active">
+                                            <th style="width:39px;">序号</th>
+                                            <th style="width:39px;">选择</th>
+                                            <th>测试对象</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tr_test_data"></tbody>
+                                </table>
+</                          <div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" id="all_select">全选</button>
@@ -110,10 +114,12 @@
         $("input[name='ckb']").each(function(){
             if($(this).is(":checked")){
                 dict['caseid'+i]=$(this).prop('id')
+                i+=1;
             }
-            i+=1;
+
         });
 
+        dict['counter']=i;
         //ajax
         $.ajax({
             url:'/insert_data/',
@@ -121,7 +127,7 @@
             data:dict,
             dataType:'json',
             success:function(args){
-                alert("ok");
+                window.location.reload();
             },
             error:function(){
                 alert("ajax_error.");
@@ -132,6 +138,18 @@
 </script>
 
 <script>
+    //chk_name选择和取消1全选 0取消选择
+    function all_select_checkbox(index){
+        $("input[name='chk_name']").each(function(){
+            if(index==1){
+                $(this).prop("checked",true);
+            }else{
+                $(this).prop("checked",false);
+            }
+        });
+    };
+
+
     //全选
     $("#all_select").click(function(){
         $("input[name='ckb']").each(function(){

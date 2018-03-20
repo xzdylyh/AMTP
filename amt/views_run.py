@@ -14,13 +14,14 @@ from decorator import login_limit
 
 @login_limit
 def run_test(request):
-    posts = run_interface_table.objects.all()
+    posts = run_interface_table.objects.filter(IRunUser=request.session['username'])
     return  render(request,"run_test.html",{"posts":posts,})
 
 @csrf_exempt
 @login_limit
 def insert_data(request):
-    for i in range(10000):
+
+    for i in range(int(request.POST.get('counter'))):
         try:
             caseid = request.POST.get('caseid%d'%(i))
             case_table =case_interface_table.objects.get(id=caseid)
