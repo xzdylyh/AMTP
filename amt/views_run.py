@@ -25,7 +25,10 @@ def insert_data(request):
         try:
             caseid = request.POST.get('caseid%d'%(i))
             case_table =case_interface_table.objects.get(id=caseid)
-            if not run_interface_table.objects.filter(ICaseNo=caseid):
+
+            rundata = {'ICaseNo':caseid,'IRunUser':request.session['username']}
+
+            if not run_interface_table.objects.filter(**rundata):
                 indata = {
                     "ICaseNo":caseid,
                     "IRunResult":"",
@@ -39,7 +42,6 @@ def insert_data(request):
                 }
 
                 run_interface_table.objects.create(**indata)
-                return JsonResponse({'res':1})
             else:
                 return JsonResponse({'res':0})
         except Exception as Ex:
