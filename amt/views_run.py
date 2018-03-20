@@ -25,19 +25,37 @@ def insert_data(request):
         try:
             caseid = request.POST.get('caseid%d'%(i))
             case_table =case_interface_table.objects.get(id=caseid)
-            indata = {
-                "ICaseNo":caseid,
-                "IRunResult":"",
-                "IRunUser":request.session['username'],
-                "IRunReportName":"",
-                "IRunFiled1":case_table.ICaseDescription,
-                "IRunFiled2":"",
-                "IRunFiled3":"",
-                "IRunFiled4":"",
-                "IRunFiled5":""
-            }
-            run_interface_table.objects.create(**indata)
+            if not run_interface_table.objects.filter(ICaseNo=caseid):
+                indata = {
+                    "ICaseNo":caseid,
+                    "IRunResult":"",
+                    "IRunUser":request.session['username'],
+                    "IRunReportName":"",
+                    "IRunFiled1":case_table.ICaseDescription,
+                    "IRunFiled2":"",
+                    "IRunFiled3":"",
+                    "IRunFiled4":"",
+                    "IRunFiled5":""
+                }
+
+                run_interface_table.objects.create(**indata)
+                return JsonResponse({'res':1})
+            else:
+                return JsonResponse({'res':0})
         except Exception as Ex:
+            pass
+
+    return JsonResponse({'res':1})
+
+#删除执行表中数据
+@csrf_exempt
+@login_limit
+def delete_run_data(request):
+    for i in range(int(request.POST.get('counter'))):
+        try:
+            caseid = request.POST.get('caseid%d'%(i))
+            run_interface_table.objects.filter(id=caseid).delete()
+        except:
             pass
 
     return JsonResponse({'res':1})

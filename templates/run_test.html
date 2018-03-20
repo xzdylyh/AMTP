@@ -16,7 +16,7 @@
                     <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" onclick="select_case()">
                         <span class="glyphicon glyphicon-plus " style="color: rgb(255, 255, 255);">添加</span>
                     </button>
-                    <button class="btn btn-danger btn-xs">
+                    <button class="btn btn-danger btn-xs" id="delete_data_btn">
                         <span class="glyphicon glyphicon-remove" style="color: rgb(255, 255, 255);">删除</span>
                     </button>
                 </div>
@@ -57,7 +57,7 @@
                     {% for case in posts %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td><input type="checkbox" name="chk_name"></td>
+                            <td><input type="checkbox" name="chk_name" id="{{case.id}}"></td>
                             <td>{{case.IRunFiled1}}</td>
                             <td>{{case.IRunResult}}</td>
                             <td>{{case.IRunDateTime}}</td>
@@ -91,7 +91,7 @@
                                     </thead>
                                     <tbody id="tr_test_data"></tbody>
                                 </table>
-</                          <div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" id="all_select">全选</button>
@@ -104,6 +104,37 @@
         </div>
     </div>
 </div>
+
+<script>
+    $("#delete_data_btn").click(function(){
+        var dict = {};
+        var i=0
+        $("input[name='chk_name']").each(function(){
+            if($(this).is(":checked")){
+                dict['caseid'+i]=$(this).prop('id')
+                i+=1;
+            }
+
+        });
+        dict['counter']=i;
+
+        $.ajax({
+            url:'/delete_run_data/',
+            type:'post',
+            data:dict,
+            dataType:'json',
+            success:function(args){
+                //alert(args.res);
+                window.location.reload();
+                all_select_checkbox(0);
+            },
+            error:function(){
+                alert('ajax_error!');
+            }
+        });
+    });
+
+</script>
 
 <script>
     //确认选择绑定
@@ -127,7 +158,12 @@
             data:dict,
             dataType:'json',
             success:function(args){
-                window.location.reload();
+                if(args.res==1){
+                   window.location.reload();
+                }else{
+                   alert("测试对象，已存在于测试列表，请不要重复添加。");
+                };
+
             },
             error:function(){
                 alert("ajax_error.");
