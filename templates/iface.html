@@ -36,20 +36,20 @@
         <caption></caption>
         <thead>
             <tr class="active">
-                <th>序号</th>
+                <th style="width:40px;">序号</th>
                 <th>接口描述</th>
                  <th>接口地址</th>
-                 <th>方法</th>
+                 <th style="width:40px;">方法</th>
                  <th>数据</th>
                  <th>预期</th>
-                 <th>操作</th>
+                 <th style="width:139px;">操作</th>
             </tr>
         </thead>
         <tbody>
             {% for case in posts %}
 
                 <tr>
-                    <td class="active" style="width:39px">{{forloop.counter}}</td>
+                    <td class="active">{{forloop.counter}}</td>
                     <td>
                         <div class="MHover" title="{{case.ICaseDescription}}">{{case.ICaseDescription}}</div>
                     </td>

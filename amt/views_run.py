@@ -61,3 +61,17 @@ def delete_run_data(request):
             pass
 
     return JsonResponse({'res':1})
+
+
+#执行测试－－暂未加多线程或协程
+@csrf_exempt
+@login_limit
+def execute_test(request):
+    for i in range(int(request.POST.get('counter'))):
+        try:
+            caseid = request.POST.get('caseid%d'%(i))
+
+        except:
+            pass
+
+    return JsonResponse({'res':1})

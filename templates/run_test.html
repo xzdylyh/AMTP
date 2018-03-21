@@ -29,7 +29,7 @@
                     </button>
                 </div>
                 <div class="btn-group pull-right">
-                    <button class="btn btn-success btn-xs">
+                    <button class="btn btn-success btn-xs" onclick="run_test()">
                         <span class="glyphicon glyphicon-play" style="color: rgb(255, 255, 255);"></span> 开始执行
                     </button>
                 </div>
@@ -59,7 +59,7 @@
                             <td>{{forloop.counter}}</td>
                             <td><input type="checkbox" name="chk_name" id="{{case.id}}"></td>
                             <td>{{case.IRunFiled1}}</td>
-                            <td>{{case.IRunResult}}</td>
+                            <td id="status{{case.id}}">{{case.IRunResult}}</td>
                             <td>{{case.IRunDateTime}}</td>
 
                         </tr>
@@ -106,9 +106,50 @@
 </div>
 
 <script>
+    //执行
+    function run_test(){
+        var dict = {};
+        var i=0;
+        var flag = 0;
+        $("input[name='chk_name']").each(function(){
+            if($(this).is(":checked")){
+                flag+=1;
+                $("#status"+($(this).prop('id'))).html('runing...');//
+                dict['caseid'+i]=$(this).prop('id')
+                i+=1;
+                dict['counter']=i;
+
+                //ajax
+                $.ajax({
+                    url:'',
+                    type:'post',
+                    data:dict,
+                    dataType:'json',
+                    success:function(args){
+                        if(args.res==1){
+                            $("#status"+($(this).prop('id'))).html('passed');
+                        }else{
+                            $("#status"+($(this).prop('id'))).html('failed');
+                        }
+                    },
+                    error:function(args){
+                        alert('ajax_error');
+                    }
+
+                });
+            }
+        });
+        if(flag==0){
+            alert("请勾选，要执行的对象!");
+        };
+
+
+    };
+
+    //删除数据
     $("#delete_data_btn").click(function(){
         var dict = {};
-        var i=0
+        var i=0;
         $("input[name='chk_name']").each(function(){
             if($(this).is(":checked")){
                 dict['caseid'+i]=$(this).prop('id')
