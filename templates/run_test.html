@@ -57,9 +57,9 @@
                     {% for case in posts %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td><input type="checkbox" name="chk_name" id="{{case.id}}"></td>
+                            <td><input type="checkbox" name="chk_name" id="{{case.ICaseNo}}"></td>
                             <td>{{case.IRunFiled1}}</td>
-                            <td id="status{{case.id}}">{{case.IRunResult}}</td>
+                            <td id="status{{case.ICaseNo}}">{{case.IRunResult}}</td>
                             <td>{{case.IRunDateTime}}</td>
 
                         </tr>

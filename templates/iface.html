@@ -32,7 +32,7 @@
 
 <!--views is case data -->
 <div>
-    <table  class="table table-bordered table-condensed table-hover">
+    <table  class="table table-bordered table-condensed table-hover" style="table-layout:fixed;">
         <caption></caption>
         <thead>
             <tr class="active">
@@ -45,7 +45,7 @@
                  <th style="width:139px;">操作</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
             {% for case in posts %}
 
                 <tr>
@@ -318,5 +318,12 @@
         }
 
     </script>
+    <style>
+        .table tbody tr td{
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
+        }
+    </style>
 
 {% endblock %}

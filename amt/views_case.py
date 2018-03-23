@@ -7,7 +7,7 @@ from django.forms.models import model_to_dict
 import json
 
 #自开发的包
-from models import case_interface_table
+from models import case_interface_table,run_interface_table
 from pager import pageInfo
 from modelHelp import ModelClass
 from decorator import login_limit
@@ -20,6 +20,11 @@ def case_delete_data(request):
     case_id = int(request.POST.get('caseid'))
     model_class = ModelClass(case_interface_table)
     model_class.delete_data(case_id)
+
+    #run table
+    run_table = run_interface_table.objects.filter(ICaseNo=case_id)
+    if run_table:
+        run_table[0].delete()
     '''
     #分页代码
     '''
@@ -42,6 +47,11 @@ def case_modify_data(request):
     MdfData.ICase_Data = request.POST.get('data')
     MdfData.ICase_ExResult = exresult
     MdfData.save()
+    #run table
+    run_table = run_interface_table.objects.filter(ICaseNo=mcaseid)
+    if run_table:
+        run_table.update(IRunFiled1=request.POST.get('desc'))
+
     return HttpResponse(request,"ok")
 
 #增加一条测试用例

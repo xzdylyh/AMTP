@@ -4,12 +4,14 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
-from execute import Interface
+
 
 #自开发的包
 from models import run_interface_table,case_interface_table
 from pager import pageInfo
 from modelHelp import ModelClass
+from execute import Interface
+from execute import Result_Analyse
 from decorator import login_limit
 # Create your views here.
 
@@ -57,7 +59,7 @@ def delete_run_data(request):
     for i in range(int(request.POST.get('counter'))):
         try:
             caseid = request.POST.get('caseid%d'%(i))
-            run_interface_table.objects.filter(id=caseid).delete()
+            run_interface_table.objects.filter(ICaseNo=caseid).delete()
         except:
             pass
 
@@ -74,9 +76,14 @@ def execute_test(request):
             caseid = request.POST.get('caseid%d'%(i))
             case_table = case_interface_table.objects.get(id=caseid)
             data = case_table.ICase_Data
+            ######
             url = case_table.ICaseURL
+            method = int(case_table.ICaseMethod)
             it = Interface(url,eval(data))
-            res = it.send_post_request #响应数据
+            if method==0:
+                res = it.send_post_request #响应数据
+            else:
+                res = it.send_get_request
 
         except:
             pass

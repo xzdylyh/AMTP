@@ -14,7 +14,7 @@ class Interface(object):
     #post发送数据
     @property
     def send_post_request(self):
-        res = self.session.post(self.url,self.data_dict)
+        res = self.session.post(self.url,data=self.data_dict)
         return json.dumps(res.text)
 
     #get
