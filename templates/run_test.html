@@ -114,22 +114,24 @@
         $("input[name='chk_name']").each(function(){
             if($(this).is(":checked")){
                 flag+=1;
-                $("#status"+($(this).prop('id'))).html('runing...');//
+                $("#status"+($(this).prop('id'))).html('<i style="color:blue">runing...</i>');//
                 dict['caseid'+i]=$(this).prop('id')
                 i+=1;
                 dict['counter']=i;
 
+                var runobj = $("#status"+($(this).prop('id')));
+
                 //ajax
                 $.ajax({
-                    url:'',
+                    url:'/execute_test/',
                     type:'post',
                     data:dict,
                     dataType:'json',
                     success:function(args){
                         if(args.res==1){
-                            $("#status"+($(this).prop('id'))).html('passed');
+                            runobj.html('<i style="color:green">Passed</i>');
                         }else{
-                            $("#status"+($(this).prop('id'))).html('failed');
+                            runobj.html('<i style="color:red">Failed</i>');
                         }
                     },
                     error:function(args){

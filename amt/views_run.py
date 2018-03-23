@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
+from execute import Interface
 
 #自开发的包
 from models import run_interface_table,case_interface_table
@@ -67,11 +68,17 @@ def delete_run_data(request):
 @csrf_exempt
 @login_limit
 def execute_test(request):
+
     for i in range(int(request.POST.get('counter'))):
         try:
             caseid = request.POST.get('caseid%d'%(i))
+            case_table = case_interface_table.objects.get(id=caseid)
+            data = case_table.ICase_Data
+            url = case_table.ICaseURL
+            it = Interface(url,eval(data))
+            res = it.send_post_request #响应数据
 
         except:
             pass
 
-    return JsonResponse({'res':1})
+    return JsonResponse({'res':0})
