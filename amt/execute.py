@@ -41,7 +41,7 @@ class Result_Analyse(object):
         elif option==1: #深度对比
             result =eval(result)
             ex_result = eval(ex_result)
-            dict_ret = self.qc(result,ex_result)
+            dict_ret = self.__qc(result,ex_result)
 
         else:
             retVal = '其它比对功能还在开发中…………；option请输入0(字符串比对)或1(深度比对，字典核对)'
@@ -54,7 +54,7 @@ class Result_Analyse(object):
         return ret_result
 
     #
-    def qc(self,result,ex_result):
+    def __qc(self,result,ex_result):
         ret ={}
         equal = True #预期与结果，key值是相等的
         key_exist = True #预期中的key值在结果中是存在的

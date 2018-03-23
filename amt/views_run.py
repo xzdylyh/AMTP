@@ -73,19 +73,38 @@ def execute_test(request):
 
     for i in range(int(request.POST.get('counter'))):
         try:
-            caseid = request.POST.get('caseid%d'%(i))
-            case_table = case_interface_table.objects.get(id=caseid)
-            data = case_table.ICase_Data
+            case_id = request.POST.get('caseid%d'%(i))
+            case_table = case_interface_table.objects.get(id=case_id)
             ######
+            data = case_table.ICase_Data
             url = case_table.ICaseURL
             method = int(case_table.ICaseMethod)
+            ex_result = case_table.ICase_ExResult
+            ######
             it = Interface(url,eval(data))
             if method==0:
                 res = it.send_post_request #响应数据
+                RA =Result_Analyse()
+                ret_dict = RA.re_to_exre(res,ex_result,option=1)
+                run_table = run_interface_table.objects.filter(ICaseNo=case_id)
+                if ret_dict['key_exist']==True and ret_dict['equal']==True:
+
+                    run_table.update(IRunResult='Passed')
+
+                    return JsonResponse({'res':1})
+                else:
+                    run_table.update(IRunResult='Failed')
+                    return JsonResponse({'res':0})
+
             else:
                 res = it.send_get_request
-
+                RA =Result_Analyse()
+                ret_dict = RA.re_to_exre(res,ex_result,option=1)
+                if ret_dict['key_exist']==True and ret_dict['equal']==True:
+                    return JsonResponse({'res':1})
+                else:
+                    return JsonResponse({'res':0})
         except:
             pass
 
-    return JsonResponse({'res':0})
+    #return JsonResponse({'res':0})
