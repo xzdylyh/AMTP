@@ -13,18 +13,18 @@ class case_interface_table(models.Model):
     ICase_Data = models.TextField() #data=dict{}
     ICase_ExResult = models.TextField() #ExResult
     Icase_CreateUser = models.CharField(max_length=150) #Case Create User
-    users = models.ManyToManyField(User)
+    #users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.ICaseNo
-
+    '''
     class Meta:
         ordering = ['ICaseNo']
-
+    '''
 #接口执行表
 class run_interface_table(models.Model):
     IRunNo = models.AutoField #执行编号
-    case_interface = models.ForeignKey(case_interface_table) #外键不加to_fieds关联对方主键
+    #case_interface = models.ForeignKey(case_interface_table) #外键不加to_fieds关联对方主键
     #ICaseNo = models.IntegerField() #用例编号
     IRunDateTime = models.DateTimeField(auto_now=True) #执行日期时间
     IRunResult = models.CharField(max_length=150) #执行结果
