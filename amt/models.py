@@ -13,25 +13,27 @@ class case_interface_table(models.Model):
     ICase_Data = models.TextField() #data=dict{}
     ICase_ExResult = models.TextField() #ExResult
     Icase_CreateUser = models.CharField(max_length=150) #Case Create User
-    IcaseFiled1 = models.CharField(max_length=500)
-    IcaseFiled2 = models.CharField(max_length=500)
-    IcaseFiled3 = models.CharField(max_length=500)
-    IcaseFiled4 = models.CharField(max_length=500)
-    IcaseFiled5 = models.CharField(max_length=500)
+    users = models.ManyToManyField(User)
+
+    def __str__(self):
+        return self.ICaseNo
+
+    class Meta:
+        ordering = ['ICaseNo']
 
 #接口执行表
 class run_interface_table(models.Model):
     IRunNo = models.AutoField #执行编号
-    ICaseNo = models.IntegerField() #用例编号
+    case_interface = models.ForeignKey(case_interface_table) #外键不加to_fieds关联对方主键
+    #ICaseNo = models.IntegerField() #用例编号
     IRunDateTime = models.DateTimeField(auto_now=True) #执行日期时间
     IRunResult = models.CharField(max_length=150) #执行结果
     IRunUser = models.CharField(max_length=150) #执行用户
     IRunReportName = models.CharField(max_length=150) #执行报告名称
     IRunFiled1 = models.CharField(max_length=500) #描述
-    IRunFiled2 = models.CharField(max_length=500)
-    IRunFiled3 = models.CharField(max_length=500)
-    IRunFiled4 = models.CharField(max_length=500)
-    IRunFiled5 = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.IRunNo
 
 #用户表
 class User(models.Model):
@@ -41,6 +43,9 @@ class User(models.Model):
     create_time = models.DateTimeField("创建日期",auto_now_add=True) #第一次创建时间，之后更新model不会更改
     e_mail =models.CharField(max_length=150) #e-mail
     #status = models.ManyToManyField('User_Status',null=True)
+
+    def __str__(self):
+        return self.username
 
 '''
 #用户状态表
